@@ -1,5 +1,13 @@
 [
 	{
+		"version": "1.0.1",
+		"downloadUrl": "https://simplygoodwork.com/",
+		"date": "2016-06-29T10:00:00-00:00",
+		"notes": [
+			"[Fixed] Removes potentially upcoming feature reveal."
+		]
+	},
+	{
 		"version": "1.0.0",
 		"downloadUrl": "https://simplygoodwork.com/",
 		"date": "2016-06-29T10:00:00-00:00",

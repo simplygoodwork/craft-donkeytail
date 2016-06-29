@@ -41,6 +41,11 @@ A real would example would likely have the canvas in a parent container with `po
 
 ## Changelog
 
+
+### 1.0.1
+
+- Removes potentially upcoming feature reveal.
+
 ### 1.0
 
 - Initial release.
