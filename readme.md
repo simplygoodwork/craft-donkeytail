@@ -46,6 +46,10 @@ A real would example would likely have the canvas in a parent container with `po
 
 - Removes potentially upcoming feature reveal.
 - Fixes readme intro to match marketing page.
+- Fixes US spelling.
+- Fixes tag ordering to make more sense.
+- Adds description for Craft plugins page
+- Adds correct URLs for docs/releases etc.
 
 ### 1.0
 

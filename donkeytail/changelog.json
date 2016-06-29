@@ -6,6 +6,10 @@
 		"notes": [
 			"[Fixed] Removes potentially upcoming feature reveal."
 			"[Fixed] Readme intro to match marketing page."
+			"[Fixed] US spelling.",
+			"[Fixed] tag ordering to make more sense.",
+			"[Fixed] Description for Craft plugins page",
+			"[Fixed] Dorrect URLs for docs/releases etc.",
 		]
 	},
 	{
