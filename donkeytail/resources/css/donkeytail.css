@@ -1,9 +1,9 @@
 .donkeytail {
 	background:#eee;
-	border-radius: 3px;
-	border: 1px solid #e3e5e8;
+	border-radius:3px;
+	border:1px solid #e3e5e8;
 	display:inline-block;
-	height: auto;
+	height:auto;
 	line-height:0;
 	overflow:hidden;
 	position:relative;
