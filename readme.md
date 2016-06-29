@@ -1,6 +1,6 @@
-# Donkeytail
+# Donkeytail for Craft
 
-A Craft CMS fieldtype for managing marker positions. It's ideal for pinning locations on maps, or showing individual products a group photo for example.
+Donkeytail is a Craft CMS fieldtype which allows you to quickly and easily content manage points on images. You can use it for locations on a faux map, showcasing multiple products within an image, or even pinning the tail on a donkey.
 
 ## Installation
 
