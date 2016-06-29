@@ -12,7 +12,12 @@ class DonkeytailPlugin extends BasePlugin
 
 	public function getVersion()
 	{
-		return '1.0.0';
+		return '1.0.1';
+	}
+
+	public function getDescription()
+	{
+		return 'A fieldtype for quickly and easily managing points on images.';
 	}
 
 	public function getDeveloper()
@@ -27,17 +32,17 @@ class DonkeytailPlugin extends BasePlugin
 
 	public function getPluginUrl()
 	{
-		return 'http://simplygoodwork.com/plugins/donkeytail';
+		return 'http://donkeytail.simplygoodwork.com';
 	}
 
 	public function getDocumentationUrl()
 	{
-		return 'http://simplygoodwork.com/plugins/donkeytail';
+		return 'http://donkeytail.simplygoodwork.com';
 	}
 
 	public function getReleaseFeedUrl()
 	{
-		return 'http://simplygoodwork.com/plugins/donkeytail/changelog.json';
+		return 'https://donkeytail.simplygoodwork.com/changelog.json';
 	}
 
 }

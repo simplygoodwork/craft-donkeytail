@@ -45,6 +45,7 @@ A real would example would likely have the canvas in a parent container with `po
 ### 1.0.1
 
 - Removes potentially upcoming feature reveal.
+- Fixes readme intro to match marketing page.
 
 ### 1.0
 
