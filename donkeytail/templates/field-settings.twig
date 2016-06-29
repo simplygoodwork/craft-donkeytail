@@ -1,0 +1,75 @@
+{% import "_includes/forms" as forms %}
+
+{{ forms.elementSelectField({
+	elements: variables.elementsOwnerImage,
+	sourceElementId: settings.canvasImageId,
+	limit: 1,
+    id: 'canvasImageId',
+    name: 'canvasImageId',
+    elementType: variables.elementType,
+    criteria: {
+        'kind': ['image'],
+        'localeEnabled': null,
+    },
+    jsClass: 'Craft.AssetSelectInput',
+    addButtonLabel: 'Select Canvas Image',
+    label: "Canvas asset",
+	instructions: "The canvas image for your dots",
+}) }}
+
+
+{{ forms.lightswitchField({
+	label: "Show siblings",
+	instructions: "Show dots from other entries in this section?",
+	id: "showSiblings",
+	name: "showSiblings",
+	on: (settings.showSiblings is defined) ? settings.showSiblings : "",
+}) }}
+
+
+{{ forms.selectField({
+		label: "Dot type",
+		instructions: "What shape of dot should be used",
+		id: 'dotType',
+		name: 'dotType',
+		options: [
+			{
+				value: 'pin',
+				label: 'Pin'
+			},
+			{
+				value: 'circle',
+				label: 'Circle'
+			},
+			{
+				value: 'shape',
+				label: 'Multi-point shape (coming soon)',
+				disabled: true,
+			}
+		],
+		value: settings.dotType,
+	})
+}}
+
+
+{{ forms.textField({
+		label: "Dot width",
+		instructions: "Width (in pixels) of each dot. Have this match your front end as close as possible",
+		placeholder: 20,
+		size: 1,
+		id: 'dotWidth',
+		name: 'dotWidth',
+		type: 'number',
+		value: settings.dotWidth,
+	})
+}}
+
+
+{{ forms.colorField({
+		label: "Dot color",
+		instructions: "The color to be used for the dot",
+		id: 'dotColor',
+		name: 'dotColor',
+		value: settings.dotColor,
+	})
+}}

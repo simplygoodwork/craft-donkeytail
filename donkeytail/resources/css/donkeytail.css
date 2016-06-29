@@ -1,0 +1,42 @@
+.donkeytail {
+	background:#eee;
+	border-radius: 3px;
+	border: 1px solid #e3e5e8;
+	display:inline-block;
+	height: auto;
+	line-height:0;
+	overflow:hidden;
+	position:relative;
+}
+
+.donkeytail.active .donkeytail__dot{
+	transition:all .2s ease;
+}
+
+.donkeytail__canvas {
+	height:auto;
+	line-height:0;
+	max-width:100%;
+	padding:0;
+}
+
+.donkeytail__dot {
+	cursor:-webkit-grab;
+	display:block;
+	left:50%;
+	position:absolute;
+	top:-50%;
+	z-index:2;
+}
+
+.donkeytail__sibling {
+	display:block;
+	position:absolute;
+	opacity:.5;
+	z-index:1;
+}
+
+.donkeytail .donkeytail__dot.ui-draggable-dragging {
+	cursor:-webkit-grabbing;
+	transition:none;
+}

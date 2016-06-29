@@ -1,0 +1,87 @@
+{% set debug = false %}
+
+{% if settings.canvasImageId == "" %}
+	A valid <strong>Canvas asset</strong> is missing from this fields settings.
+{% else %}
+
+	{% if debug %}
+		<strong>id</strong> is {{ id }}<br>
+		<strong>name</strong> is {{ name }}<br>
+		<strong>namespaceId</strong> is {{ namespaceId }}<br>
+		<strong>settings.canvasImage</strong> is {{ settings.canvasImage }}<br>
+		<strong>settings.showSiblings</strong> is {% if settings.showSiblings %}yes{% else %}no{% endif %}<br>
+		<strong>settings.dotWidth</strong> is {{ settings.dotWidth }}<br>
+		<strong>settings.dotType</strong> is {{ settings.dotType }}<br>
+		<strong>settings.dotColor</strong> is {{ settings.dotColor }}<br>
+		{% set fieldType = "text" %}
+	{% else %}
+		{% set fieldType = "hidden" %}
+	{% endif %}
+
+	{% set dotActive = false %}
+	{% if (dot is not null and dot.leftPercentage is defined ? dot.leftPercentage) and
+		(dot is not null and dot.topPercentage is defined ? dot.topPercentage) %}
+		{% set dotActive = true %}
+	{% endif %}
+
+
+	<style type="text/css">
+		.donkeytail-{{ name }} .donkeytail__dot,
+		.donkeytail-{{ name }} .donkeytail__sibling {
+			width: {{ settings.dotWidth }}px;
+		}
+		.donkeytail-{{ name }} .donkeytail__dot circle.fillme,
+		.donkeytail-{{ name }} .donkeytail__dot path.fillme,
+		.donkeytail-{{ name }} .donkeytail__sibling circle.fillme,
+		.donkeytail-{{ name }} .donkeytail__sibling path.fillme {
+			fill: {{ settings.dotColor }};
+		}
+		.donkeytail-{{ name }}.donkeytail-type--pin .donkeytail__dot,
+		.donkeytail-{{ name }}.donkeytail-type--pin .donkeytail__sibling {
+			margin-left: {{ settings.dotWidth * -0.5}}px;
+			margin-top: {{ settings.dotWidth * -1.5}}px;
+		}
+		.donkeytail-{{ name }}.donkeytail-type--circle .donkeytail__dot,
+		.donkeytail-{{ name }}.donkeytail-type--ring .donkeytail__dot,
+		.donkeytail-{{ name }}.donkeytail-type--circle .donkeytail__sibling,
+		.donkeytail-{{ name }}.donkeytail-type--ring .donkeytail__sibling {
+			margin-left: {{ settings.dotWidth * -0.5}}px;
+			margin-top: {{ settings.dotWidth * -0.5}}px;
+		}
+	</style>
+
+	{% switch settings.dotType %}
+		{% case "pin" %}
+			{% set shape = '<svg viewBox="0 0 60 90">
+				<path d="M4.07845166,44.9723248 L30,90 L55.9215483,44.9723248 C67.4769374,24.9846249 53.110778,0 30,0 C6.88922196,0 -7.47693736,24.9846249 4.07845166,44.9723248 Z" fill="#FFFFFF"></path>
+				<path d="M8.39870972,42.4769374 L30,80 L51.6012903,42.4769374 C61.2307811,25.8205208 49.2589817,5 30,5 C10.7410183,5 -1.23078113,25.8205208 8.39870972,42.4769374 Z" class="fillme" fill="#000000"></path>
+			</svg>' %}
+		{% case "circle" %}
+			{% set shape = '<svg viewBox="0 0 50 50">
+				<circle fill="#FFFFFF" cx="25" cy="25" r="25"></circle>
+				<circle class="fillme" fill="#000000" cx="25" cy="25" r="20"></circle>
+			</svg>' %}
+	{% endswitch %}
+
+	<input type="{{ fieldType }}" class="leftPercentage" name="{{ name }}[leftPercentage]" value="{{ dot is not null and dot.leftPercentage is defined ? dot.leftPercentage }}" id="{{ id }}-input-leftPercentage">
+	<input type="{{ fieldType }}" class="topPercentage" name="{{ name }}[topPercentage]" value="{{ dot is not null and dot.topPercentage is defined ? dot.topPercentage }}" id="{{ id }}-input-topPercentage">
+
+	{% if debug %}
+		<hr>
+	{% endif %}
+
+
+	<div id="{{ id }}-field" class="donkeytail donkeytail-{{ name }} donkeytail-type--{{ settings.dotType }} {% if dotActive %}active{% endif %}
+	">
+		<img id="{{ id }}-canvas" class="donkeytail__canvas" src="{{ settings.canvasImage }}">
+		<div id="{{ id }}-dot" class="donkeytail__dot" data-type="{{ settings.dotType }}" style="left:{{ dot.leftPercentage is defined and dot.leftPercentage is not null and dot.leftPercentage ? dot.leftPercentage: '' }}%;top:{{ dot.topPercentage is defined and dot.topPercentage is not null and dot.topPercentage ? dot.topPercentage }}%">
+				{{ shape|raw }}
+		</div>
+		{% if settings.showSiblings %}
+			{% for sibling in siblings %}
+				<div id="{{ id }}-subling-{{ loop.index }}" class="donkeytail__sibling" data-siblingediturl="{{ sibling.cpEditUrl }}" title="{{ sibling.title }} (hold shift and click to edit)" data-siblingtitle="{{ sibling.title }}" style="{{ sibling.topLeftStyles }}">{{ shape|raw }}</div>
+			{% endfor %}
+		{% endif %}
+	</div>
+
+{% endif %}
