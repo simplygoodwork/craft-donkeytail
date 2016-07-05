@@ -1,0 +1,23 @@
+[
+	{
+		"version": "1.0.1",
+		"downloadUrl": "https://donkeytail.simplygoodwork.com/",
+		"date": "2016-06-29T10:00:00-00:00",
+		"notes": [
+			"[Fixed] Removes potentially upcoming feature reveal."
+			"[Fixed] Readme intro to match marketing page."
+			"[Fixed] US spelling.",
+			"[Fixed] tag ordering to make more sense.",
+			"[Fixed] Description for Craft plugins page",
+			"[Fixed] Dorrect URLs for docs/releases etc.",
+		]
+	},
+	{
+		"version": "1.0.0",
+		"downloadUrl": "https:/donkeytail.simplygoodwork.com/",
+		"date": "2016-06-29T10:00:00-00:00",
+		"notes": [
+			"[Added] Initial release."
+		]
+	}
+]
