@@ -2,8 +2,11 @@ $(function () {
 
 	// Draggable dot
 	$(".donkeytail .donkeytail__dot").draggable({
+		containment: 'parent',
 		stop: function(event, ui){
-			updateFields($(this), ui.position)
+			percentages = updateFields($(this), ui.position);
+			$(this).css("left", percentages['left'] + '%')
+						 .css("top", percentages['top'] + '%');
 		},
 	});
 
@@ -32,7 +35,7 @@ $(function () {
 });
 
 // Update hidden fields
-function updateFields($dot, offset) {
+function updateFields($dot, offset) {	
 	var $parent = $dot.parent().find(".donkeytail__canvas");
 	var percentages = new Array();
 
