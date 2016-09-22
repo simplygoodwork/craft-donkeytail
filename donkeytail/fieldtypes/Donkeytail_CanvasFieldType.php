@@ -85,7 +85,6 @@ class Donkeytail_CanvasFieldType extends BaseFieldType
         }
     }
 
-
     public function prepValue($value)
     {
         $values = (array) JsonHelper::decode($value);

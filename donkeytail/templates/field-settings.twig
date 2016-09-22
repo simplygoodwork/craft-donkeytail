@@ -17,7 +17,6 @@
 	instructions: "The canvas image for your dots",
 }) }}
 
-
 {{ forms.lightswitchField({
 	label: "Show siblings",
 	instructions: "Show dots from other entries in this section?",
@@ -25,7 +24,6 @@
 	name: "showSiblings",
 	on: (settings.showSiblings is defined) ? settings.showSiblings : "",
 }) }}
-
 
 {{ forms.selectField({
 		label: "Dot type",
@@ -46,7 +44,6 @@
 	})
 }}
 
-
 {{ forms.textField({
 		label: "Dot width",
 		instructions: "Width (in pixels) of each dot. Have this match your front end as close as possible",
@@ -58,7 +55,6 @@
 		value: settings.dotWidth,
 	})
 }}
-
 
 {{ forms.colorField({
 		label: "Dot color",

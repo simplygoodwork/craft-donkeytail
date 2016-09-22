@@ -31,7 +31,6 @@ $(function () {
 
 });
 
-
 // Update hidden fields
 function updateFields($dot, offset) {
 	var $parent = $dot.parent().find(".donkeytail__canvas");
