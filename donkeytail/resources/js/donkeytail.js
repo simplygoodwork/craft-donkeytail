@@ -8,10 +8,10 @@ $(function () {
 			$(this).css("left", percentages['left'] + '%')
 						 .css("top", percentages['top'] + '%');
 		},
-	});
+	}).css("position", "absolute");
 
 	// // Clickable canvas
-	$("#fields").on("click", ".donkeytail .donkeytail__canvas, .donkeytail .donkeytail__sibling", function(e){
+	$(".field").on("click", ".donkeytail .donkeytail__canvas, .donkeytail .donkeytail__sibling", function(e){
 		$canvas = $(this).parent().find(".donkeytail__canvas");
 		$dot = $(this).parent().find(".donkeytail__dot");
 
@@ -35,7 +35,7 @@ $(function () {
 });
 
 // Update hidden fields
-function updateFields($dot, offset) {	
+function updateFields($dot, offset) {
 	var $parent = $dot.parent().find(".donkeytail__canvas");
 	var percentages = new Array();
 
