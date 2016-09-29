@@ -1,4 +1,4 @@
-<img src="http://www.simplygoodtwerk.com/uploads/donkeytail/donkeytail-logo.svg" style="max-width:335px;" />
+![Donkeytail Craft CMS Fieldtype](http://www.simplygoodtwerk.com/uploads/donkeytail/donkeytail-logo.png)
 
 ## A Craft CMS fieldtype to content manage points on images
 
