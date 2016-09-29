@@ -49,6 +49,12 @@ A real would example would likely have the canvas in a parent container with `po
 
 ## Changelog
 
+### 1.0.2
+
+- Updates JS binding and makes dot absolute at all times
+- Fixes responsive positioning bug
+- Updates JsonHelper
+- Updates the way defaults are set
 
 ### 1.0.1
 
