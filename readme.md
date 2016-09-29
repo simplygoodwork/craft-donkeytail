@@ -1,8 +1,13 @@
-![Donkeytail](http://www.simplygoodtwerk.com/uploads/donkeytail/donkeytail-logo.svg)
+<img src="http://www.simplygoodtwerk.com/uploads/donkeytail/donkeytail-logo.svg" style="max-width:335px;" />
 
 ## A Craft CMS fieldtype to content manage points on images
 
 Donkeytail is a Craft CMS fieldtype that allows you to quickly and easily content manage points on images. You can use it for locations on a faux map, showcasing multiple products within an image, or even pinning the tail on a donkey.
+
+Check it out:
+
+- [Dots on a lifestyle photo](http://www.simplygoodtwerk.com/uploads/donkeytail/donkeytail-lifestyle-points.png)
+- [Dots on a faux map](http://www.simplygoodtwerk.com/uploads/donkeytail/donkeytail-map-points.png)
 
 ## Requirements
 
@@ -41,14 +46,6 @@ The field returns 3 strings:
 You’ll need to render the canvas asset yourself as you normally would within a template. (the field doens’t offer this incase you’d like to use a different, perhaps simplified version in the control panel)
 
 A real would example would likely have the canvas in a parent container with `position:relative`. The dots can then be set to `position:absolute` and their positions output using an inline style attribute and `{{ entry.fieldName.topLeftStyles }}`. Don't forget to use negative margins or similar to move your front-end marker's point to the match the anchor point of the dot.
-
-### Donkeytail used with a lifestyle photo
-
-![Donkeytail dots on a lifestyle photo](http://www.simplygoodtwerk.com/uploads/donkeytail/donkeytail-lifestyle-points.png)
-
-### Donkeytail used with a faux map
-
-![Donkeytail dots on a map photo](http://www.simplygoodtwerk.com/uploads/donkeytail/donkeytail-map-points.png)
 
 ## Changelog
 
