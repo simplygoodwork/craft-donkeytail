@@ -4,10 +4,10 @@
 
 Donkeytail is a Craft CMS fieldtype that allows you to quickly and easily content manage points on images. You can use it for locations on a faux map, showcasing multiple products within an image, or even pinning the tail on a donkey.
 
-Check it out:
+Check out these examples:
 
-- [Dots on a lifestyle photo](http://www.simplygoodtwerk.com/uploads/donkeytail/donkeytail-lifestyle-points.png)
-- [Dots on a faux map](http://www.simplygoodtwerk.com/uploads/donkeytail/donkeytail-map-points.png)
+- [Dots on a lifestyle photo](http://www.simplygoodtwerk.com/uploads/donkeytail/donkeytail-lifestyle-points.jpg)
+- [Dots on a faux map](http://www.simplygoodtwerk.com/uploads/donkeytail/donkeytail-gw-locations.jpg)
 
 ## Requirements
 
