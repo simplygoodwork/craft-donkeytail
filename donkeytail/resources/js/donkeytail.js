@@ -11,7 +11,7 @@ $(function () {
 	}).css("position", "absolute");
 
 	// // Clickable canvas
-	$(".field").on("click", ".donkeytail .donkeytail__canvas, .donkeytail .donkeytail__sibling", function(e){
+	$("#main").on("click", ".donkeytail .donkeytail__canvas, .donkeytail .donkeytail__sibling", function(e){
 		$canvas = $(this).parent().find(".donkeytail__canvas");
 		$dot = $(this).parent().find(".donkeytail__dot");
 

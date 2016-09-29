@@ -61,6 +61,7 @@ Happy pinning!
 - Fixes responsive positioning bug
 - Updates JsonHelper
 - Updates the way defaults are set
+- Fixes click binding when using the field in Assets and Users
 
 ### 1.0.1
 

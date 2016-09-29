@@ -8,6 +8,7 @@
 			"[Fixed] responsive positioning bug",
 			"[Updated] JsonHelper",
 			"[Updated] the way defaults are set"
+			"[Fixed] click binding when using the field in Assets and Users"
 		]
 	},
 	{
