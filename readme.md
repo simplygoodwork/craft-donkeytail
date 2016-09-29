@@ -8,7 +8,7 @@ Check out these examples:
 
 - [Dots on a lifestyle photo](http://www.simplygoodtwerk.com/uploads/donkeytail/donkeytail-lifestyle-points.jpg)
 - [Dots on a faux map](http://www.simplygoodtwerk.com/uploads/donkeytail/donkeytail-gw-locations.jpg)
-- [Easy content management](http://www.simplygoodtwerk.com/uploads/donkeytail/donkeytail-gw-locations.jpg)
+- [Easy content management](http://www.simplygoodtwerk.com/uploads/donkeytail/donkeytail-cms-screenshot.png)
 
 ## Requirements
 
