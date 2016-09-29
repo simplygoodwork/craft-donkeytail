@@ -32,17 +32,17 @@ class DonkeytailPlugin extends BasePlugin
 
 	public function getPluginUrl()
 	{
-		return 'http://donkeytail.simplygoodwork.com';
+		return 'https://github.com/simplygoodwork/donkeytail-plugin';
 	}
 
 	public function getDocumentationUrl()
 	{
-		return 'http://donkeytail.simplygoodwork.com';
+		return 'https://github.com/simplygoodwork/donkeytail-plugin';
 	}
 
 	public function getReleaseFeedUrl()
 	{
-		return 'https://donkeytail.simplygoodwork.com/changelog.json';
+		return 'https://github.com/simplygoodwork/donkeytail-plugin';
 	}
 
 }
