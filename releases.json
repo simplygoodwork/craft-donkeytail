@@ -14,7 +14,7 @@
 		"notes": [
 			"[Fixed] Fixed JS binding and makes dot absolute at all times",
 			"[Fixed] Fixed responsive positioning bug",
-			"[Fixed] Fixed click binding when using the field in Assets and Users"
+			"[Fixed] Fixed click binding when using the field in Assets and Users",
 			"[Improved] Added JsonHelper",
 			"[Improved] Improved the way defaults are set"
 		]
@@ -27,9 +27,9 @@
 			"[Added] Added readme intro to match marketing page.",
 			"[Fixed] Fixed US spelling.",
 			"[Fixed] Fixed description for Craft plugins page",
-			"[Fixed] Fixed Correct URLs for docs/releases etc."
+			"[Fixed] Fixed Correct URLs for docs/releases etc.",
 			"[Improved] Removes potentially upcoming feature reveal."
-			"[Improved] Improved tag ordering to make more sense.",
+			"[Improved] Improved tag ordering to make more sense."
 		]
 	},
 	{
