@@ -4,7 +4,7 @@
 		"downloadUrl": "https://github.com/simplygoodwork/donkeytail-plugin/archive/master.zip",
 		"date": "2016-09-30T10:00:00-00:00",
 		"notes": [
-			"[Fixed] Fixed releases feed",
+			"[Fixed] Fixed releases feed."
 		]
 	},
 	{
@@ -12,11 +12,11 @@
 		"downloadUrl": "https://github.com/simplygoodwork/donkeytail-plugin/archive/master.zip",
 		"date": "2016-09-22T10:00:00-00:00",
 		"notes": [
-			"[Fixed] Fixed JS binding and makes dot absolute at all times",
-			"[Fixed] Fixed responsive positioning bug",
-			"[Fixed] Fixed click binding when using the field in Assets and Users",
-			"[Improved] Added JsonHelper",
-			"[Improved] Improved the way defaults are set"
+			"[Added] Added JsonHelper.",
+			"[Fixed] Fixed JS binding and made dot absolute at all times.",
+			"[Fixed] Fixed responsive positioning bug.",
+			"[Fixed] Fixed click binding when using the field in Assets and Users.",
+			"[Fixed] Fixed the way defaults are set."
 		]
 	},
 	{
@@ -26,9 +26,9 @@
 		"notes": [
 			"[Added] Added readme intro to match marketing page.",
 			"[Fixed] Fixed US spelling.",
-			"[Fixed] Fixed description for Craft plugins page",
+			"[Fixed] Fixed description for Craft plugins page.",
 			"[Fixed] Fixed Correct URLs for docs/releases etc.",
-			"[Improved] Removes potentially upcoming feature reveal."
+			"[Improved] Removes potentially upcoming feature reveal.",
 			"[Improved] Improved tag ordering to make more sense."
 		]
 	},
