@@ -12,7 +12,7 @@ class DonkeytailPlugin extends BasePlugin
 
 	public function getVersion()
 	{
-		return '1.0.1';
+		return '1.0.3';
 	}
 
 	public function getDescription()
@@ -37,12 +37,12 @@ class DonkeytailPlugin extends BasePlugin
 
 	public function getDocumentationUrl()
 	{
-		return 'https://github.com/simplygoodwork/donkeytail-plugin';
+		return 'https://github.com/simplygoodwork/donkeytail-plugin/blob/master/README.md';
 	}
 
 	public function getReleaseFeedUrl()
 	{
-		return 'https://github.com/simplygoodwork/donkeytail-plugin';
+		return 'https://raw.githubusercontent.com/simplygoodwork/donkeytail-plugin/master/releases.json';
 	}
 
 }

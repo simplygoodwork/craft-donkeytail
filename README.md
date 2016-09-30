@@ -53,26 +53,3 @@ A real world example would likely have the canvas in a parent container with `po
 The current version of Donkeytail, **Donkeytail Lite**, is limited to a single image asset per fieldtype. [Follow us on Twitter](http://twitter.com/simplygoodwork) to keep up-to-date with our plans for Donkeytail Pro, a more robust option for your multi asset needs.
 
 Happy pinning!
-
-## Changelog
-
-### 1.0.2
-
-- Updates JS binding and makes dot absolute at all times
-- Fixes responsive positioning bug
-- Updates JsonHelper
-- Updates the way defaults are set
-- Fixes click binding when using the field in Assets and Users
-
-### 1.0.1
-
-- Removes potentially upcoming feature reveal
-- Fixes readme intro to match marketing page
-- Fixes US spelling
-- Fixes tag ordering to make more sense
-- Adds description for Craft plugins page
-- Adds correct URLs for docs/releases etc.
-
-### 1.0
-
-- Initial release.
