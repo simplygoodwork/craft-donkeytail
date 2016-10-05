@@ -2,9 +2,7 @@
 
 ## A Craft CMS fieldtype to content manage points on images
 
-**Donkeytail Lite** is a Craft CMS fieldtype that allows you to quickly and easily content manage points on images. You can use it for locations on a faux map, showcasing multiple products within an image, or even pinning the tail on a donkey.
-
-Check out these examples:
+**Donkeytail Lite** is a Craft CMS fieldtype that allows you to quickly and easily content manage points on images. You can use it for locations on a faux map, showcasing multiple products within an image, or even pinning the tail on a donkey. We've put together a short [video demo](https://vimeo.com/185669453) showing how you might use Donkeytail, or check out other these examples:
 
 - [Dots on a lifestyle photo](http://www.simplygoodtwerk.com/uploads/donkeytail/donkeytail-lifestyle-points.jpg)
 - [Dots on a faux map](http://www.simplygoodtwerk.com/uploads/donkeytail/donkeytail-gw-locations.jpg)
@@ -47,6 +45,10 @@ The field returns 3 strings:
 You’ll need to render the canvas asset yourself as you normally would within a template. (the field doens’t offer this incase you’d like to use a different, perhaps simplified version in the control panel)
 
 A real world example would likely have the canvas in a parent container with `position:relative`. The dots can then be set to `position:absolute` and their positions output using an inline style attribute and `{{ entry.fieldName.topLeftStyles }}`. Don't forget to use negative margins or similar to move your front-end marker’s point to the match the anchor point of the dot.
+
+### Did you know?
+
+You can hold shift while clicking on a sibling dot to jump straight to that entry.
 
 ## The future
 
