@@ -1,6 +1,6 @@
 ![Donkeytail Craft CMS Fieldtype](http://www.simplygoodtwerk.com/uploads/donkeytail/donkeytail-logo.png)
 
-## A Craft CMS fieldtype to content manage points on images
+## A Craft CMS fieldtype for content managing points on images
 
 **Donkeytail Lite** is a Craft CMS fieldtype that allows you to quickly and easily content manage points on images. You can use it for locations on a faux map, showcasing multiple products within an image, or even pinning the tail on a&nbsp;donkey.
 
