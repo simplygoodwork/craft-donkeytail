@@ -2,11 +2,14 @@
 
 ## A Craft CMS fieldtype to content manage points on images
 
-**Donkeytail Lite** is a Craft CMS fieldtype that allows you to quickly and easily content manage points on images. You can use it for locations on a faux map, showcasing multiple products within an image, or even pinning the tail on a donkey. We've put together a short [video demo](https://vimeo.com/185669453) showing how you might use Donkeytail, or check out other these examples:
+**Donkeytail Lite** is a Craft CMS fieldtype that allows you to quickly and easily content manage points on images. You can use it for locations on a faux map, showcasing multiple products within an image, or even pinning the tail on a&nbsp;donkey.
 
-- [Dots on a lifestyle photo](http://www.simplygoodtwerk.com/uploads/donkeytail/donkeytail-lifestyle-points.jpg)
-- [Dots on a faux map](http://www.simplygoodtwerk.com/uploads/donkeytail/donkeytail-gw-locations.jpg)
-- [Easy content management](http://www.simplygoodtwerk.com/uploads/donkeytail/donkeytail-cms-screenshot.png)
+- **[Video demo](https://vimeo.com/185669453)**
+- **[Documentation](https://github.com/simplygoodwork/donkeytail-plugin#usage)**
+- **[Changelog](https://github.com/simplygoodwork/donkeytail-plugin/releases)**
+- **[Issues & bugs](https://github.com/simplygoodwork/donkeytail-plugin/issues)**
+
+Follow the [@simplygoodwork](https://twitter.com/simplygoodwork) Twitter account for updates.
 
 ## Requirements
 
