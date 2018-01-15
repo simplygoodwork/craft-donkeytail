@@ -51,7 +51,7 @@ class Donkeytail_CanvasFieldType extends BaseFieldType
                     $sibling = $siblingElement->getContent();
                     $values = $this->prepValue($sibling[$name]);
                     // If they have an active dot
-                    if ($sibling[$name] != "") {
+                    if ($sibling[$name] != "" && $values) {
                         // Prep them for returning
                         $siblings[] = array(
                             "id" => $sibling['id'],
@@ -92,6 +92,8 @@ class Donkeytail_CanvasFieldType extends BaseFieldType
             if ($values['topPercentage'] != "" && $values['leftPercentage'] != "") {
                 $values["topLeftStyles"] = "top:" . $values['topPercentage'] . "%;left:" . $values['leftPercentage'] . "%;";
             }
+        } else {
+          return false;
         }
 
         return $values;
