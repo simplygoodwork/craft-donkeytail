@@ -1,0 +1,90 @@
+{# @var craft \craft\web\twig\variables\CraftVariable #}
+{#
+/**
+ * Donkeytail plugin for Craft CMS 3.x
+ *
+ * Donkeytail Field Input
+ *
+ * @author    Good Work
+ * @copyright Copyright (c) 2020 Good Work
+ * @link      https://simplygoodwork.com
+ * @package   Donkeytail
+ * @since     1.0.0
+ */
+#}
+
+
+{% js %}
+  window.csrfToken = "{{ craft.app.request.csrfToken }}"
+{% endjs %}
+
+{% import "_includes/forms" as forms %}
+
+{% if assetsSourceExists %}
+{# NOTE: Drag'n'drop onto this does not work: https://github.com/craftcms/cms/issues/3024 #}
+{{ 
+  forms.elementSelectField({
+    elements: (assetElements is defined and assetElements ? [assetElements][0]),
+    id: id ~ '-canvasId',
+    name: name ~ '[canvasId]',
+    label: '' |t,
+    elementType: assetElementType,
+    criteria: {
+    'kind': [],
+    'enabledForSite': null,
+    },
+    sources: assetSources,
+    jsClass: 'Craft.AssetSelectInput',
+    addButtonLabel: "Select an Image" |t,
+    limit: 1,
+  })
+}}
+{# sourceElementId: value.canvasId, #}
+
+  <div id="{{ id }}-pane" class="pane flex flex-wrap items-start overflow-hidden 2xl:!flex-no-wrap" {{ value.canvasId|length ? : "style='height: 0; opacity: 0; padding: 0;'" }}>
+    <div>
+      {{ 
+        forms.elementSelectField({
+          elements: (entryElements is defined and entryElements ? [entryElements][0]),
+          id: id ~ '-pins',
+          name: name ~ '[pinIds]',
+          label: 'Pins' |t,
+          elementType: entryElementType,
+          criteria: {
+            'enabledForSite': null,
+          },
+          sources: entrySources,
+          jsClass: 'Craft.BaseElementSelectInput',
+          addButtonLabel: "Select an Entry" |t,
+          class: 'm-10'
+        })
+      }}
+      {# sourceElementId: value.pinIds, #}
+    </div>
+    <div id="{{ id ~ '-app' }}">
+      <donkeytail-canvas
+        name="{{ name }}"
+        field="{{ field }}"
+        namespaced-id="{{ namespacedId }}"
+        :value="{{ value.canvasId[0] ?? 0 }}"
+        :meta="{{ meta ?? [] }}"
+        >
+      </donkeytail-canvas>
+    </div>
+  </div>
+
+{% else %}
+  <p class="error">No assets sources currently exist.</p>
+{% endif %}
+
+{% css %}
+@media screen and (min-width: 1600px) {
+  #{{ namespacedId }}-pane .elements .title {
+    max-width: 250px;
+    display: block;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+}
+{% endcss %}

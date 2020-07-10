@@ -1,0 +1,52 @@
+{# @var craft \craft\web\twig\variables\CraftVariable #}
+{#
+/**
+ * Donkeytail plugin for Craft CMS
+ *
+ * Donkeytail Field Settings
+ *
+ * @author    Good Work
+ * @copyright Copyright (c) 2020 Good Work
+ * @link      https://simplygoodwork.com
+ * @package   Donkeytail
+ * @since     1.0.0
+ */
+#}
+
+{% import "_includes/forms" as forms %}
+
+{# {% do view.registerAssetBundle("simplygoodwork\\donkeytail\\assetbundles\\donkeytail\\DonkeytailAsset") %} #}
+
+<div>
+    {% if assetSources %}
+        {{ forms.checkboxSelectField({
+            label: "Canvas Sources"|t,
+            instructions: "Which asset sources do you want to select the canvas from?"|t,
+            id: 'assetSources',
+            name: 'assetSources',
+            options: assetSources,
+            values: field['assetSources']
+        }) }}
+    {% else %}
+        {{ forms.field({
+            label: "Asset Sources"|t,
+        }, '<p class="error">' ~ "No canvas asset sources exist yet."|t ~ '</p>') }}
+    {% endif %}
+
+    {% if entrySources %}
+        {{ forms.checkboxSelectField({
+            label: "Entry Sources"|t,
+            instructions: "Select entries to pin to canvas"|t,
+            id: 'entrySources',
+            name: 'entrySources',
+            options: entrySources,
+            values: field['entrySources'],
+            showAllOption: true
+        }) }}
+    {% else %}
+        {{ forms.field({
+            label: "Entry Sources"|t,
+        }, '<p class="error">' ~ "No sections exist yet."|t ~ '</p>') }}
+    {% endif %}
+</div>
+
