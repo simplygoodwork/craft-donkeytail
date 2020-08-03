@@ -359,7 +359,6 @@ class Donkeytail extends Field
             $view->registerJs("window.DONKEYTAIL_DEBUG = true;", $view::POS_HEAD);
             $view->registerJs("window.dispatchEvent(new CustomEvent('build', { detail: '#$namespacedId-app' }));");
         } else {
-            $view->registerJs("window.DONKEYTAIL_DEBUG = true;", $view::POS_HEAD);
             $view->registerJs("new Vue({ el: '#$namespacedId-app' });");
         } 
 
