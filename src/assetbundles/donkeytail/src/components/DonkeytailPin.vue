@@ -52,7 +52,13 @@ export default {
     })
 
     if (this.position.x !== 0 || this.position.y !== 0) {
+      // Set Position on Window Resize
       window.addEventListener('resize', this.setPosition)
+
+      // Set Position upon switching tabs in editor
+      new ResizeObserver(this.setPosition).observe(
+        document.getElementById('content-container'),
+      )
       this.setPosition()
     }
 
