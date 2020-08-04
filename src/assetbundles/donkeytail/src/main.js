@@ -15,7 +15,7 @@ const VueDonkeytailPlugin = {
 }
 
 if (typeof window !== 'undefined' && window.Vue) {
-  Vue.use(VueDonkeytailPlugin)
+  window.Vue.use(VueDonkeytailPlugin)
 }
 
 if (window.DONKEYTAIL_DEBUG == true) {
