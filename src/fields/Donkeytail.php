@@ -23,6 +23,7 @@ use craft\elements\Asset;
 use craft\elements\Entry;
 use craft\helpers\Json;
 use simplygoodwork\donkeytail\models\DonkeytailModel;
+use simplygoodwork\donkeytail\gql\DonkeytailType;
 
 /**
  * Donkeytail Field
@@ -430,5 +431,13 @@ class Donkeytail extends Field
         }
 
         return $sourceOptions;
+    }
+
+
+    /**
+     * @inheritdoc
+     */
+    public function getContentGqlType() {
+        return DonkeytailType::getType();
     }
 }

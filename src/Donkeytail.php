@@ -21,6 +21,9 @@ use craft\events\PluginEvent;
 use craft\services\Fields;
 use craft\web\twig\variables\CraftVariable;
 use craft\events\RegisterComponentTypesEvent;
+use craft\services\Gql;
+use craft\events\RegisterGqlTypesEvent;
+use simplygoodwork\donkeytail\gql\DonkeytailType;
 
 use yii\base\Event;
 
@@ -123,6 +126,14 @@ class Donkeytail extends Plugin
                 if ($event->plugin === $this) {
                     // We were just installed
                 }
+            }
+        );
+
+        Event::on(
+            Gql::class, 
+            Gql::EVENT_REGISTER_GQL_TYPES, 
+            function (RegisterGqlTypesEvent $event) {
+                $event->types[] = DonkeytailType::class;
             }
         );
 
