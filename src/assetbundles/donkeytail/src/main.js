@@ -22,26 +22,7 @@ if (typeof window !== 'undefined' && window.Vue) {
   }
 }
 
-const mainVue = e => {
-  return {
-    el: `${e.detail}`,
-    data() {
-      return {
-        pinElementType: 'entries',
-      }
-    },
-    mounted() {
-      const pinElementTypeSelect = document.querySelector(
-        `${e.detail} .pinElementType select`,
-      )
-      if (pinElementTypeSelect) {
-        pinElementTypeSelect.addEventListener('change', event => {
-          this.pinElementType = event.target.value
-        })
-      }
-    },
-  }
-}
+const mainVue = e => ({ el: e.detail })
 
 window.addEventListener(
   'build',
