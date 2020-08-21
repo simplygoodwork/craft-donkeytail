@@ -13,11 +13,6 @@
  */
 #}
 
-
-{% js %}
-  window.csrfToken = "{{ craft.app.request.csrfToken }}"
-{% endjs %}
-
 {% import "_includes/forms" as forms %}
 
 {% if assetsSourceExists %}

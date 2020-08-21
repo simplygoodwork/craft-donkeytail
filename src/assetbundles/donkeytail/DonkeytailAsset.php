@@ -58,7 +58,6 @@ class DonkeytailAsset extends AssetBundle
         // define the relative path to CSS/JS files that should be registered with the page
         // when this asset bundle is registered
         if (getenv('DONKEYTAIL_DEBUG') == 'true') {
-            
             $this->js = ['http://localhost:8080/js/chunk-vendors.js', 'http://localhost:8080/js/app.js'];
         } else {
             $this->js = ['js/app.js', 'js/chunk-vendors.js'];
