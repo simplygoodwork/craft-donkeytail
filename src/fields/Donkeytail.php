@@ -356,12 +356,9 @@ class Donkeytail extends Field
         $id = $view->formatInputId($this->handle);
         $namespacedId = $view->namespaceInputId($id);
 
-        if (getenv('DONKEYTAIL_DEBUG') == true) {
-            $view->registerJs("window.DONKEYTAIL_DEBUG = true;", $view::POS_HEAD);
-            $view->registerJs("window.dispatchEvent(new CustomEvent('build', { detail: '#$namespacedId-app' }));");
-        } else {
-            $view->registerJs("new Vue({ el: '#$namespacedId-app' });");
-        } 
+        $csrf = Craft::$app->request->csrfToken;
+        $view->registerJs("window.csrfToken = '$csrf';", $view::POS_HEAD);
+        $view->registerJs("window.dispatchEvent(new CustomEvent('build', { detail: '#$namespacedId-app' }));", $view::POS_END);
 
         // Set asset elements
         $assetElements = [];

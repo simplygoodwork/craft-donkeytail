@@ -15,17 +15,44 @@ const VueDonkeytailPlugin = {
 }
 
 if (typeof window !== 'undefined' && window.Vue) {
-  window.Vue.use(VueDonkeytailPlugin)
+  if (process.env.NODE_ENV == 'development') {
+    Vue.use(VueDonkeytailPlugin)
+  } else {
+    window.Vue.use(VueDonkeytailPlugin)
+  }
 }
 
-if (window.DONKEYTAIL_DEBUG == true) {
-  // Dev mode for Vue devtools & debugging
-  // Set DONKEYTAIL_DEBUG=true in project .env
-  window.addEventListener(
-    'build',
-    function(e) {
-      new Vue({ el: e.detail })
+const mainVue = e => {
+  return {
+    el: `${e.detail}`,
+    data() {
+      return {
+        pinElementType: 'entries',
+      }
     },
-    false,
-  )
+    mounted() {
+      const pinElementTypeSelect = document.querySelector(
+        `${e.detail} .pinElementType select`,
+      )
+      if (pinElementTypeSelect) {
+        pinElementTypeSelect.addEventListener('change', event => {
+          this.pinElementType = event.target.value
+        })
+      }
+    },
+  }
 }
+
+window.addEventListener(
+  'build',
+  function(e) {
+    if (process.env.NODE_ENV == 'development') {
+      // Dev mode for Vue devtools & debugging
+      // Set DONKEYTAIL_DEBUG=true in project .env
+      new Vue(mainVue(e))
+    } else {
+      new window.Vue(mainVue(e))
+    }
+  },
+  false,
+)
