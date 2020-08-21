@@ -4,6 +4,7 @@ import Vue from 'vue'
 import DonkeytailCanvas from './components/DonkeytailCanvas.vue'
 import DonkeytailPin from './components/DonkeytailPin.vue'
 import './app.css'
+import 'alpinejs'
 
 Vue.config.productionTip = false
 

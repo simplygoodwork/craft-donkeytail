@@ -8,6 +8,7 @@
     "dev": "vue-cli-service serve"
   },
   "dependencies": {
+    "alpinejs": "^2.6.0",
     "draggabilly": "^2.3.0",
     "tailwindcss-important": "^1.0.0",
     "tippy.js": "^6.2.5",
