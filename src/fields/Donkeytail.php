@@ -43,19 +43,15 @@ class Donkeytail extends Field
     // Public Properties
     // =========================================================================
 
-    /**
-     * Some attribute
-     *
-     * @var string
-     */
+    public $canvasSources = [];
+
+    public $pinElementType = [];
+
+    public $entrySources = [];
+
     public $assetSources = [];
 
-    /**
-     * Some attribute
-     *
-     * @var string
-     */
-    public $entrySources = [];
+    public $categorySources = [];
 
     // Static Methods
     // =========================================================================
@@ -238,13 +234,25 @@ class Donkeytail extends Field
      */
     public function getSettingsHtml()
     {
+        $view = Craft::$app->getView();
+
+        // Register our asset bundle
+        $view->registerAssetBundle(DonkeytailAsset::class);
+
+        $id = $view->formatInputId('donkeytail');
+        $namespacedId = $view->namespaceInputId($id);
+
         // Render the settings template
         return Craft::$app->getView()->renderTemplate(
             'donkeytail/_components/fields/Donkeytail_settings',
             [
                 'field' => $this,
+                'pinElementType' => $this->pinElementType,
                 'assetSources' => $this->getSourceOptions('craft\elements\Asset'),
                 'entrySources' => $this->getSourceOptions('craft\elements\Entry'),
+                'categorySources' => $this->getSourceOptions('craft\elements\Category'),
+                'id' => $id,
+                'namespacedId' => $namespacedId,
             ]
         );
     }

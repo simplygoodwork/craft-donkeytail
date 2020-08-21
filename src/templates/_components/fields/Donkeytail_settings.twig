@@ -15,38 +15,111 @@
 
 {% import "_includes/forms" as forms %}
 
-{# {% do view.registerAssetBundle("simplygoodwork\\donkeytail\\assetbundles\\donkeytail\\DonkeytailAsset") %} #}
-
-<div>
+<div
+    id="{{ id }}-x"
+    x-data="{ pinElementType: '{{ pinElementType ?? null }}' }"
+    x-init="
+        () => { var pinElementTypeSelect = document.querySelector('#{{ namespacedId }}-x .pinElementType select')
+        if (pinElementTypeSelect) {
+            pinElementTypeSelect.addEventListener('change', event => {
+                pinElementType = event.target.value
+            })
+        }
+    }"
+>
+{# <div id="{{ id ~ '-app' }}"> #}
     {% if assetSources %}
         {{ forms.checkboxSelectField({
             label: "Canvas Sources"|t,
             instructions: "Which asset sources do you want to select the canvas from?"|t,
-            id: 'assetSources',
-            name: 'assetSources',
+            id: 'canvasSources',
+            name: 'canvasSources',
             options: assetSources,
-            values: field['assetSources']
+            values: field['canvasSources']
         }) }}
     {% else %}
         {{ forms.field({
-            label: "Asset Sources"|t,
-        }, '<p class="error">' ~ "No canvas asset sources exist yet."|t ~ '</p>') }}
+            label: "Canvas Sources"|t,
+        }, '<p class="error">' ~ "No asset sources exist yet."|t ~ '</p>') }}
     {% endif %}
 
-    {% if entrySources %}
+    {% if assetSources %}
+
+        {% set options = [
+            {
+                label: 'Select Element Type',
+                value: null,
+                disabled: true
+            }
+        ] %}
+
+        {% if entrySources %}
+            {% set options = options|merge([{
+                label: 'Entries',
+                value: 'entries'
+            }]) %}
+        {% endif %}
+
+        {% set options = options|merge([{
+            label: 'Assets',
+            value: 'assets'
+        }]) %}
+
+        {% if categorySources %}
+            {% set options = options|merge([{
+                label: 'Categories',
+                value: 'categories'
+            }]) %}
+        {% endif %}
+
+        {{ forms.selectField({
+            label: "Pin Element Type"|t,
+            instructions: "What type of element will these pins be?"|t,
+            id: 'pinElementType',
+            name: 'pinElementType',
+            class: 'pinElementType',
+            options: options,
+            value: pinElementType
+        }) }}
+        
+    {% endif %}
+
+    <div x-show="pinElementType == 'entries'">
         {{ forms.checkboxSelectField({
             label: "Entry Sources"|t,
-            instructions: "Select entries to pin to canvas"|t,
+            instructions: "Which sources do you want to select entry pins from?"|t,
             id: 'entrySources',
             name: 'entrySources',
             options: entrySources,
             values: field['entrySources'],
             showAllOption: true
         }) }}
-    {% else %}
-        {{ forms.field({
-            label: "Entry Sources"|t,
-        }, '<p class="error">' ~ "No sections exist yet."|t ~ '</p>') }}
-    {% endif %}
+    </div>
+
+    <div x-show="pinElementType == 'assets'">
+        {{ forms.checkboxSelectField({
+            label: "Asset Sources"|t,
+            instructions: "Which sources do you want to select asset pins from?"|t,
+            id: 'assetSources',
+            name: 'assetSources',
+            options: assetSources,
+            values: field['assetSources'],
+            showAllOption: true
+        }) }}
+    </div>
+
+    <div x-show="pinElementType == 'categories'">
+        {{ forms.checkboxSelectField({
+            label: "Category Sources"|t,
+            instructions: "Which sources do you want to select category pins from?"|t,
+            id: 'categorySources',
+            name: 'categorySources',
+            options: categorySources,
+            values: field['categorySources'],
+            showAllOption: true
+        }) }}
+    </div>
 </div>
+
+
 
