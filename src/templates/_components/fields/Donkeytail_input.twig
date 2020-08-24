@@ -15,7 +15,7 @@
 
 {% import "_includes/forms" as forms %}
 
-{% if canvasSourceExists %}
+{% if canvasSourceExists and canvasSources|length %}
 {# NOTE: Drag'n'drop onto this does not work: https://github.com/craftcms/cms/issues/3024 #}
 {{ 
   forms.elementSelectField({
@@ -38,22 +38,26 @@
 
   <div id="{{ id }}-pane" class="pane flex flex-wrap items-start overflow-hidden 2xl:!flex-no-wrap" {{ value.canvasId|length ? : "style='height: 0; opacity: 0; padding: 0;'" }}>
     <div>
-      {{ 
-        forms.elementSelectField({
-          elements: (pinElements is defined and pinElements ? [pinElements][0]),
-          id: id ~ '-pins',
-          name: name ~ '[pinIds]',
-          label: 'Pins' |t,
-          elementType: pinElementType,
-          criteria: {
-            'enabledForSite': null,
-          },
-          sources: pinElementSources,
-          jsClass: 'Craft.BaseElementSelectInput',
-          addButtonLabel: "Select an #{pinElementType}" |t,
-          class: 'm-10'
-        })
-      }}
+      {% if pinElementSources|length %}
+        {{ 
+          forms.elementSelectField({
+            elements: (pinElements is defined and pinElements ? [pinElements][0]),
+            id: id ~ '-pins',
+            name: name ~ '[pinIds]',
+            label: 'Pins' |t,
+            elementType: pinElementType,
+            criteria: {
+              'enabledForSite': null,
+            },
+            sources: pinElementSources,
+            jsClass: 'Craft.BaseElementSelectInput',
+            addButtonLabel: "Select an #{pinElementType}" |t,
+            class: 'm-10'
+          })
+        }}
+      {% else %}
+        <p class="error">No {{ pinElementType|split('\\')|last|lower }} sources specified.</p>
+      {% endif %}
       {# sourceElementId: value.pinIds, #}
     </div>
     <div id="{{ id ~ '-app' }}">
@@ -69,7 +73,11 @@
   </div>
 
 {% else %}
-  <p class="error">No assets sources currently exist.</p>
+  {% if canvasSources|length == 0 %}
+    <p class="error">No canvas sources specified.</p>
+  {% else %}
+    <p class="error">No assets sources currently exist.</p>
+  {% endif %}
 {% endif %}
 
 {% css %}
