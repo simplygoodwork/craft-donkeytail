@@ -21,6 +21,7 @@ use yii\db\Schema;
 use craft\helpers\Html;
 use craft\elements\Asset;
 use craft\elements\Entry;
+use craft\elements\Category;
 use craft\helpers\Json;
 use simplygoodwork\donkeytail\models\DonkeytailModel;
 use simplygoodwork\donkeytail\gql\DonkeytailType;
@@ -369,30 +370,34 @@ class Donkeytail extends Field
         $view->registerJs("window.dispatchEvent(new CustomEvent('build', { detail: '#$namespacedId-app' }));", $view::POS_END);
 
         // Set asset elements
-        $assetElements = [];
+        $canvasElements = [];
 
         if ($value['canvasId'] && is_array($value['canvasId'])) {
-            $assetElements = [Craft::$app->getAssets()->getAssetById($value['canvasId'][0])];
+            $canvasElements = [Craft::$app->getAssets()->getAssetById($value['canvasId'][0])];
         }
 
+        $assetElements = $canvasElements;
+
         // Set entry elements
-        $entryElements = [];
+        $pinElements = [];
         $meta = [];
         if ($value['pinIds'] && is_array($value['pinIds'])) {
             foreach ($value['pinIds'] as $pinId) {
-                $pinEntry = Craft::$app->getEntries()->getEntryById($pinId);
-                if ($pinEntry) {
+                $pinElement = Craft::$app->getElements()->getElementById($pinId, "craft\\elements\\$this->pinElementType");
+                if ($pinElement) {
                     // If entry exists, show it
-                    array_push($entryElements, $pinEntry);
+                    array_push($pinElements, $pinElement);
                     
                     // Ensure label for pin entry is up to date
-                    $value->meta[$pinEntry->id]['label'] = $pinEntry->title;
+                    $value->meta[$pinElement->id]['label'] = $pinElement->title;
 
                     // Only include meta for entries that exist
-                    array_push($meta, $value->meta[$pinEntry->id]);
+                    array_push($meta, $value->meta[$pinElement->id]);
                 }
             }
         }
+
+        $pinElementSources = strtolower($this->pinElementType).'Sources';
 
         // Render the input template
         return Craft::$app->getView()->renderTemplate(
@@ -404,14 +409,14 @@ class Donkeytail extends Field
                 'id' => $id,
                 'namespacedId' => $namespacedId,
 
-                'assetsSourceExists' => count(Craft::$app->getAssets()->findFolders()),
-                'assetElements' => $assetElements,
-                'assetElementType' => Asset::class,
-                'assetSources' => $this->assetSources,
+                'canvasSourceExists' => count(Craft::$app->getAssets()->findFolders()),
+                'canvasElements' => $canvasElements,
+                'canvasElementType' => Asset::class,
+                'canvasSources' => $this->canvasSources,
 
-                'entrySources' => $this->entrySources,
-                'entryElements' => $entryElements,
-                'entryElementType' => Entry::class,
+                'pinElementType' => "craft\\elements\\$this->pinElementType",
+                'pinElements' => $pinElements,
+                'pinElementSources' => $this->{$pinElementSources},
 
                 'meta' => json_encode($meta),
             ]

@@ -17,7 +17,7 @@
 
 <div
     id="{{ id }}-x"
-    x-data="{ pinElementType: '{{ pinElementType ?? null }}' }"
+    x-data="{ pinElementType: '{{ pinElementType|length ? pinElementType : null }}' }"
     x-init="
         () => { var pinElementTypeSelect = document.querySelector('#{{ namespacedId }}-x .pinElementType select')
         if (pinElementTypeSelect) {
@@ -27,7 +27,7 @@
         }
     }"
 >
-{# <div id="{{ id ~ '-app' }}"> #}
+
     {% if assetSources %}
         {{ forms.checkboxSelectField({
             label: "Canvas Sources"|t,
@@ -35,6 +35,7 @@
             id: 'canvasSources',
             name: 'canvasSources',
             options: assetSources,
+            required: true,
             values: field['canvasSources']
         }) }}
     {% else %}
@@ -56,35 +57,35 @@
         {% if entrySources %}
             {% set options = options|merge([{
                 label: 'Entries',
-                value: 'entries'
+                value: 'Entry'
             }]) %}
         {% endif %}
 
         {% set options = options|merge([{
             label: 'Assets',
-            value: 'assets'
+            value: 'Asset'
         }]) %}
 
         {% if categorySources %}
             {% set options = options|merge([{
                 label: 'Categories',
-                value: 'categories'
+                value: 'Category'
             }]) %}
         {% endif %}
 
         {{ forms.selectField({
-            label: "Pin Element Type"|t,
+            label: "Pins Element Type"|t,
             instructions: "What type of element will these pins be?"|t,
             id: 'pinElementType',
             name: 'pinElementType',
             class: 'pinElementType',
             options: options,
-            value: pinElementType
+            value: pinElementType|length ? pinElementType : null
         }) }}
         
     {% endif %}
 
-    <div x-show="pinElementType == 'entries'">
+    <div x-show="pinElementType == 'Entry'">
         {{ forms.checkboxSelectField({
             label: "Entry Sources"|t,
             instructions: "Which sources do you want to select entry pins from?"|t,
@@ -92,11 +93,12 @@
             name: 'entrySources',
             options: entrySources,
             values: field['entrySources'],
-            showAllOption: true
+            showAllOption: true,
+            required: true
         }) }}
     </div>
 
-    <div x-show="pinElementType == 'assets'">
+    <div x-show="pinElementType == 'Asset'">
         {{ forms.checkboxSelectField({
             label: "Asset Sources"|t,
             instructions: "Which sources do you want to select asset pins from?"|t,
@@ -104,11 +106,12 @@
             name: 'assetSources',
             options: assetSources,
             values: field['assetSources'],
-            showAllOption: true
+            showAllOption: true,
+            required: true
         }) }}
     </div>
 
-    <div x-show="pinElementType == 'categories'">
+    <div x-show="pinElementType == 'Category'">
         {{ forms.checkboxSelectField({
             label: "Category Sources"|t,
             instructions: "Which sources do you want to select category pins from?"|t,
@@ -116,10 +119,10 @@
             name: 'categorySources',
             options: categorySources,
             values: field['categorySources'],
-            showAllOption: true
+            showAllOption: true,
+            required: true
         }) }}
     </div>
-</div>
 
 
 

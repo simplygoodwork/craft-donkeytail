@@ -15,20 +15,20 @@
 
 {% import "_includes/forms" as forms %}
 
-{% if assetsSourceExists %}
+{% if canvasSourceExists %}
 {# NOTE: Drag'n'drop onto this does not work: https://github.com/craftcms/cms/issues/3024 #}
 {{ 
   forms.elementSelectField({
-    elements: (assetElements is defined and assetElements ? [assetElements][0]),
+    elements: (canvasElements is defined and canvasElements ? [canvasElements][0]),
     id: id ~ '-canvasId',
     name: name ~ '[canvasId]',
     label: '' |t,
-    elementType: assetElementType,
+    elementType: canvasElementType,
     criteria: {
     'kind': [],
     'enabledForSite': null,
     },
-    sources: assetSources,
+    sources: canvasSources,
     jsClass: 'Craft.AssetSelectInput',
     addButtonLabel: "Select an Image" |t,
     limit: 1,
@@ -40,17 +40,17 @@
     <div>
       {{ 
         forms.elementSelectField({
-          elements: (entryElements is defined and entryElements ? [entryElements][0]),
+          elements: (pinElements is defined and pinElements ? [pinElements][0]),
           id: id ~ '-pins',
           name: name ~ '[pinIds]',
           label: 'Pins' |t,
-          elementType: entryElementType,
+          elementType: pinElementType,
           criteria: {
             'enabledForSite': null,
           },
-          sources: entrySources,
+          sources: pinElementSources,
           jsClass: 'Craft.BaseElementSelectInput',
-          addButtonLabel: "Select an Entry" |t,
+          addButtonLabel: "Select an #{pinElementType}" |t,
           class: 'm-10'
         })
       }}
