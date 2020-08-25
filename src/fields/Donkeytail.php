@@ -408,6 +408,7 @@ class Donkeytail extends Field
                 'field' => $this,
                 'id' => $id,
                 'namespacedId' => $namespacedId,
+                'element' => $element,
 
                 'canvasSourceExists' => count(Craft::$app->getAssets()->findFolders()),
                 'canvasElements' => $canvasElements,
