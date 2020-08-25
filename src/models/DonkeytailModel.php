@@ -15,6 +15,7 @@ use simplygoodwork\donkeytail\Donkeytail;
 
 use Craft;
 use craft\base\Model;
+use craft\services\Elements;
 use craft\elements\Entry;
 use simplygoodwork\donkeytail\models\PinModel;
 
@@ -112,11 +113,17 @@ class DonkeytailModel extends Model
         return $result;
     }
 
-
+    public function getPinsElementType() {
+        if (!count($this->pinIds)) {
+            return null;
+        }
+        return (new Elements)->getElementTypeById($this->pinIds[0]);
+    }
 
     public function getPins()
-    {
-        $query = Entry::find();
+    {   
+        $elementTypeClass = $this->getPinsElementType();
+        $query = $elementTypeClass::find();
         $criteria = [
             'id' => $this->pinIds
         ];
@@ -125,10 +132,10 @@ class DonkeytailModel extends Model
 
         $pins = [];
 
-        foreach ($queryAll as $key => $entry) {
-            $pinMeta = $this->meta[$entry->id];
+        foreach ($queryAll as $key => $element) {
+            $pinMeta = $this->meta[$element->id];
             $pin = new PinModel();
-            $pin->entry = $entry;
+            $pin->element = $element;
             $pin->x = $pinMeta['x'];
             $pin->y = $pinMeta['y'];
             array_push($pins, $pin);
