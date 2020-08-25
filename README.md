@@ -38,7 +38,7 @@ The following attributes are available from your donkeytail field:
 
 - `pins`: Array of pins attached to canvas:
 
-  - `entry`: The pin entry element.
+  - `element`: The pin element.
 
   - `x`: The left percentage value of the pin's anchor point in relation to the canvas (without % suffix).
 
@@ -51,9 +51,23 @@ The following attributes are available from your donkeytail field:
   - `style`: Returns the top and left percentages as CSS style properties and values.
     - For example `top: 42.121%; left: 88.1337%;`.
 
+### GraphQL
+
+The following attributes are available from your donkeytail field when accessed via graphql:
+
+- `canvas`: The canvas asset element.
+
+- `pins`: Pins attached to canvas:
+
+  - `x`: The left percentage value of the pin's anchor point in relation to the canvas (without % suffix).
+
+  - `y`: The top percentage value of the pin's anchor point in relation to the canvas (without % suffix).
+
+- {`entry`, `asset`, `category`}: The pin element.
+
 ### Real world example
 
-You’ll need to render the canvas asset yourself as you normally would within a template. (the field doens’t offer this incase you’d like to use a different, perhaps simplified version in the control panel)
+You’ll need to render the canvas asset yourself as you normally would within a template. (the field doesn’t offer this incase you’d like to use a different, perhaps simplified version in the control panel)
 
 A real world example would likely have the canvas in a parent container with `position: relative`. The dots can then be set to `position: absolute` and their positions output using an inline style attribute and `{{ entry.donkeytailField.style }}`. Don't forget to use negative margins or similar to move your front-end marker’s point to the match the anchor point of the dot.
 
