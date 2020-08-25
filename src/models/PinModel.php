@@ -15,6 +15,8 @@ use simplygoodwork\donkeytail\Donkeytail;
 
 use Craft;
 use craft\base\Model;
+use craft\elements\Asset;
+use craft\elements\Category;
 use craft\elements\Entry;
 
 /**
@@ -35,7 +37,7 @@ class PinModel extends Model
     // =========================================================================
 
 
-    public $entry = null;
+    public $element = null;
 
     public $x = '';
 
@@ -57,21 +59,45 @@ class PinModel extends Model
     public function rules()
     {
         return [
-            ['entry', 'object'],
+            ['element', 'object'],
             ['x', 'string'],
             ['y', 'string'],
         ];
     }
 
-    public function  getStyle() {
+    public function getStyle() {
         return "left: $this->x%; top: $this->y%;";
     }
 
-    public function  getLeft() {
+    public function getLeft() {
         return "$this->x%";
     }
 
-    public function  getTop() {
+    public function getTop() {
         return "$this->y%";
+    }
+
+    // For GraphQL usage
+    public function getEntry() {
+        if (!$this->element instanceof Entry) {
+            return null;
+        }
+        return $this->element;
+    }
+
+    // For GraphQL usage
+    public function getAsset() {
+        if (!$this->element instanceof Asset) {
+            return null;
+        }
+        return $this->element;
+    }
+    
+    // For GraphQL usage
+    public function getCategory() {
+        if (!$this->element instanceof Category) {
+            return null;
+        }
+        return $this->element;
     }
 }
