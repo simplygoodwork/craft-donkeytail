@@ -397,7 +397,7 @@ class Donkeytail extends Field
             }
         }
 
-        $pinElementSources = strtolower($this->pinElementType).'Sources';
+        $pinElementSources = $this->pinElementType ? strtolower($this->pinElementType).'Sources' : 'entrySources';
 
         // Render the input template
         return Craft::$app->getView()->renderTemplate(
@@ -414,9 +414,9 @@ class Donkeytail extends Field
                 'canvasElementType' => Asset::class,
                 'canvasSources' => $this->canvasSources,
 
-                'pinElementType' => "craft\\elements\\$this->pinElementType",
+                'pinElementType' => $this->pinElementType ? "craft\\elements\\$this->pinElementType" : null,
+                'pinElementSources' => $this->{$pinElementSources} ? $this->{$pinElementSources} : null,
                 'pinElements' => $pinElements,
-                'pinElementSources' => $this->{$pinElementSources},
 
                 'meta' => json_encode($meta),
             ]
