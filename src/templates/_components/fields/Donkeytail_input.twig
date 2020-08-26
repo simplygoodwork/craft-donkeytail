@@ -16,10 +16,20 @@
 {% import "_includes/forms" as forms %}
 
 {% if canvasSourceExists and canvasSources|length %}
+
+{% set canvasElement = [] %}
+{% set autoSelected = false %}
+{% if canvasElements is defined and canvasElements|length %}
+  {% set canvasElement = [canvasElements][0] %}
+{% elseif element is instance of('craft\\elements\\Asset') and element.kind == 'image' and field.autoSelect == true %}
+  {% set autoSelected = true %}
+  {% set canvasElement = [element] %}
+{% endif %}
+
 {# NOTE: Drag'n'drop onto this does not work: https://github.com/craftcms/cms/issues/3024 #}
 {{ 
   forms.elementSelectField({
-    elements: (canvasElements is defined and canvasElements ? [canvasElements][0]),
+    elements: canvasElement,
     id: id ~ '-canvasId',
     name: name ~ '[canvasId]',
     label: '' |t,
@@ -30,13 +40,14 @@
     },
     sources: canvasSources,
     jsClass: 'Craft.AssetSelectInput',
-    addButtonLabel: "Select an Image" |t,
+    selectionLabel: "Add Canvas" |t,
     limit: 1,
+    tip: autoSelected ? 'This canvas image has been auto-selected.',
+    fieldClass: 'mb-0'
   })
 }}
-{# sourceElementId: value.canvasId, #}
 
-  <div id="{{ id }}-pane" class="pane flex flex-wrap items-start overflow-hidden 2xl:!flex-no-wrap" {{ value.canvasId|length ? : "style='height: 0; opacity: 0; padding: 0;'" }}>
+  <div id="{{ id }}-pane" class="pane flex flex-wrap items-start overflow-hidden 2xl:!flex-no-wrap" {{ value.canvasId|length or autoSelected ? : "style='height: 0; opacity: 0; padding: 0;'" }}>
     <div>
       {% if pinElementSources|length %}
         {{ 
@@ -51,21 +62,20 @@
             },
             sources: pinElementSources,
             jsClass: 'Craft.BaseElementSelectInput',
-            addButtonLabel: "Select an #{pinElementType}" |t,
+            selectionLabel: "Add #{pinElementType|split('\\')|last}" |t,
             class: 'm-10'
           })
         }}
       {% else %}
-        <p class="error">No {{ pinElementType|split('\\')|last|lower }} sources specified.</p>
+        <p class="error whitespace-normal">No {{ pinElementType|split('\\')|last|lower }} sources specified.</p>
       {% endif %}
-      {# sourceElementId: value.pinIds, #}
     </div>
     <div id="{{ id ~ '-app' }}">
       <donkeytail-canvas
         name="{{ name }}"
         field="{{ field }}"
         namespaced-id="{{ namespacedId }}"
-        :value="{{ value.canvasId[0] ?? 0 }}"
+        :value="{{ canvasElement[0].id ?? 0 }}"
         :meta="{{ meta ?? [] }}"
         >
       </donkeytail-canvas>

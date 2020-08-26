@@ -54,6 +54,8 @@ class Donkeytail extends Field
 
     public $categorySources = [];
 
+    public $autoSelect = false;
+
     // Static Methods
     // =========================================================================
 

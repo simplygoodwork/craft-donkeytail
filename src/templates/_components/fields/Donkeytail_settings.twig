@@ -124,5 +124,13 @@
         }) }}
     </div>
 
+    <hr>
 
+    {{ forms.lightswitchField({
+        label: "Auto-Select Canvas"|t,
+        instructions: "Whether the canvas is auto-selected when editing an image asset"|t,
+        id: 'autoSelect',
+        name: 'autoSelect',
+        on: field['autoSelect']
+    }) }}
 
