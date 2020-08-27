@@ -17,6 +17,12 @@ use craft\gql\interfaces\elements\Asset as AssetInterface;
 use craft\gql\arguments\elements\Category as CategoryArguments;
 use craft\gql\interfaces\elements\Category as CategoryInterface;
 
+use craft\commerce\gql\arguments\elements\Product as ProductArguments;
+use craft\commerce\gql\interfaces\elements\Product as ProductInterface;
+
+use craft\commerce\gql\arguments\elements\Variant as VariantArguments;
+use craft\commerce\gql\interfaces\elements\Variant as VariantInterface;
+
 use craft\gql\types\elements\Element as ElementType;
 use craft\gql\interfaces\Element as ElementInterface;
 use craft\gql\types\generators\ElementType as GeneratorsElementType;
@@ -81,6 +87,18 @@ class PinType extends ObjectType
                 'description' => 'Pin\'s category element',
                 'type' => CategoryInterface::getType(),
                 'args' => CategoryArguments::getArguments(),
+            ],
+            'product' => [
+                'name' => 'product',
+                'description' => 'Pin\'s product element',
+                'type' => ProductInterface::getType(),
+                'args' => ProductArguments::getArguments(),
+            ],
+            'variant' => [
+                'name' => 'variant',
+                'description' => 'Pin\'s product variant element',
+                'type' => VariantInterface::getType(),
+                'args' => VariantArguments::getArguments(),
             ],
         ], self::getName());
     }

@@ -18,6 +18,8 @@ use craft\base\Model;
 use craft\elements\Asset;
 use craft\elements\Category;
 use craft\elements\Entry;
+use craft\commerce\elements\Product;
+use craft\commerce\elements\Variant;
 
 /**
  * DonkeytailModel Model
@@ -96,6 +98,22 @@ class PinModel extends Model
     // For GraphQL usage
     public function getCategory() {
         if (!$this->element instanceof Category) {
+            return null;
+        }
+        return $this->element;
+    }
+
+    // For GraphQL usage
+    public function getProduct() {
+        if (!$this->element instanceof Product) {
+            return null;
+        }
+        return $this->element;
+    }
+
+    // For GraphQL usage
+    public function getVariant() {
+        if (!$this->element instanceof Variant) {
             return null;
         }
         return $this->element;
