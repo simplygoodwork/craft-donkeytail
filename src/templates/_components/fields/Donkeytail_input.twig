@@ -17,35 +17,41 @@
 
 {% if canvasSourceExists and canvasSources|length %}
 
-{% set canvasElement = [] %}
-{% set autoSelected = false %}
-{% if canvasElements is defined and canvasElements|length %}
-  {% set canvasElement = [canvasElements][0] %}
-{% elseif element is instance of('craft\\elements\\Asset') and element.kind == 'image' and field.autoSelect == true %}
-  {% set autoSelected = true %}
-  {% set canvasElement = [element] %}
-{% endif %}
+  {% set canvasElement = [] %}
+  {% set autoSelected = false %}
+  {% if canvasElements is defined and canvasElements|length %}
+    {% set canvasElement = [canvasElements][0] %}
+  {% elseif element is instance of('craft\\elements\\Asset') and element.kind == 'image' and field.autoSelect == true %}
+    {% set autoSelected = true %}
+    {% set canvasElement = [element] %}
+  {% endif %}
 
-{# NOTE: Drag'n'drop onto this does not work: https://github.com/craftcms/cms/issues/3024 #}
-{{ 
-  forms.elementSelectField({
-    elements: canvasElement,
-    id: id ~ '-canvasId',
-    name: name ~ '[canvasId]',
-    label: '' |t,
-    elementType: canvasElementType,
-    criteria: {
-    'kind': [],
-    'enabledForSite': null,
-    },
-    sources: canvasSources,
-    jsClass: 'Craft.AssetSelectInput',
-    selectionLabel: "Add Canvas" |t,
-    limit: 1,
-    tip: autoSelected ? 'This canvas image has been auto-selected.',
-    fieldClass: 'mb-0'
-  })
-}}
+  {# NOTE: Drag'n'drop onto this does not work: https://github.com/craftcms/cms/issues/3024 #}
+  {{ 
+    forms.elementSelectField({
+      elements: canvasElement,
+      id: id ~ '-canvasId',
+      name: name ~ '[canvasId]',
+      label: '' |t,
+      elementType: canvasElementType,
+      criteria: {
+      'kind': [],
+      'enabledForSite': null,
+      },
+      sources: canvasSources,
+      jsClass: 'Craft.AssetSelectInput',
+      selectionLabel: "Add Canvas" |t,
+      limit: 1,
+      tip: autoSelected ? 'This canvas image has been auto-selected.',
+      fieldClass: 'mb-0'
+    })
+  }}
+
+  {% if pinElementType|split('\\')|last in ['Product', 'Variant'] %}
+    {% if not craft.app.plugins.isPluginEnabled('commerce') %}
+      {% set pinElementSources = [] %}
+    {% endif %}
+  {% endif %}
 
   <div id="{{ id }}-pane" class="pane flex flex-wrap items-start overflow-hidden 2xl:!flex-no-wrap" {{ value.canvasId|length or autoSelected ? : "style='height: 0; opacity: 0; padding: 0;'" }}>
     <div>
