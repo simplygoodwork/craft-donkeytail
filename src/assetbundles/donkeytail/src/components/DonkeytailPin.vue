@@ -52,14 +52,21 @@ export default {
     })
 
     if (this.position.x !== 0 || this.position.y !== 0) {
+      this.setPosition()
+
       // Set Position on Window Resize
       window.addEventListener('resize', this.setPosition)
 
-      // Set Position upon switching tabs in editor
+      // Set Position upon container resizing
       new ResizeObserver(this.setPosition).observe(
         document.getElementById('content-container'),
       )
-      this.setPosition()
+
+      // Set Position upon clicking tabs in editor
+      const tabs = document.getElementById('tabs')
+      if (tabs) {
+        tabs.addEventListener('click', this.setPosition)
+      }
     }
 
     // bind event listener
