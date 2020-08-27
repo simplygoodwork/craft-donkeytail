@@ -391,18 +391,26 @@ class Donkeytail extends Field
         }
 
         $pinElementType = null;
+        $commerceElementType = false;
         if ($pinElementType = $this->pinElementType) {
             if (in_array($pinElementType, ['Product', 'Variant'])) {
+                $commerceElementType = true;
                 $pinElementType = "craft\\commerce\\elements\\$pinElementType";
             } else {
                 $pinElementType = "craft\\elements\\$pinElementType";
             }
         }
 
-        // Set entry elements
+        $findPins = true;
+        // Ensure Commerce is enabled before trying to find elements for it
+        if ($commerceElementType == true && !Craft::$app->plugins->isPluginEnabled('commerce')) {
+            $findPins = false;
+        }
+
+        // Set pin elements
         $pinElements = [];
         $meta = [];
-        if ($value['pinIds'] && is_array($value['pinIds'])) {
+        if ($findPins == true && $value['pinIds'] && is_array($value['pinIds'])) {
             foreach ($value['pinIds'] as $pinId) {
                 $pinElement = Craft::$app->getElements()->getElementById($pinId, $pinElementType);
                 if ($pinElement) {
