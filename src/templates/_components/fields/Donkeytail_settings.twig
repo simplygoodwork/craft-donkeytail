@@ -73,6 +73,20 @@
             }]) %}
         {% endif %}
 
+        {% if productSources %}
+            {% set options = options|merge([{
+                label: 'Products',
+                value: 'Product'
+            }]) %}
+        {% endif %}
+
+        {% if variantSources %}
+            {% set options = options|merge([{
+                label: 'Variants',
+                value: 'Variant'
+            }]) %}
+        {% endif %}
+
         {{ forms.selectField({
             label: "Pins Element Type"|t,
             instructions: "What type of element will these pins be?"|t,
@@ -119,6 +133,32 @@
             name: 'categorySources',
             options: categorySources,
             values: field['categorySources'],
+            showAllOption: true,
+            required: true
+        }) }}
+    </div>
+
+    <div x-show="pinElementType == 'Product'">
+        {{ forms.checkboxSelectField({
+            label: "Product Sources"|t,
+            instructions: "Which sources do you want to select product pins from?"|t,
+            id: 'productSources',
+            name: 'productSources',
+            options: productSources,
+            values: field['productSources'],
+            showAllOption: true,
+            required: true
+        }) }}
+    </div>
+
+    <div x-show="pinElementType == 'Variant'">
+        {{ forms.checkboxSelectField({
+            label: "Variant Sources"|t,
+            instructions: "Which sources do you want to select product variant pins from?"|t,
+            id: 'variantSources',
+            name: 'variantSources',
+            options: variantSources,
+            values: field['variantSources'],
             showAllOption: true,
             required: true
         }) }}

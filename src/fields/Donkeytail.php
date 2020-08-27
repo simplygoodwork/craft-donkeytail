@@ -54,6 +54,10 @@ class Donkeytail extends Field
 
     public $categorySources = [];
 
+    public $productSources = [];
+
+    public $variantSources = [];
+
     public $autoSelect = false;
 
     // Static Methods
@@ -245,17 +249,25 @@ class Donkeytail extends Field
         $id = $view->formatInputId('donkeytail');
         $namespacedId = $view->namespaceInputId($id);
 
+        $productSources = [];
+        if (Craft::$app->plugins->isPluginEnabled('commerce')) {
+            $productSources = $this->getSourceOptions('craft\commerce\elements\Product');
+            $variantSources = $this->getSourceOptions('craft\commerce\elements\Variant');
+        }
+
         // Render the settings template
         return Craft::$app->getView()->renderTemplate(
             'donkeytail/_components/fields/Donkeytail_settings',
             [
+                'id' => $id,
+                'namespacedId' => $namespacedId,
                 'field' => $this,
                 'pinElementType' => $this->pinElementType,
                 'assetSources' => $this->getSourceOptions('craft\elements\Asset'),
                 'entrySources' => $this->getSourceOptions('craft\elements\Entry'),
                 'categorySources' => $this->getSourceOptions('craft\elements\Category'),
-                'id' => $id,
-                'namespacedId' => $namespacedId,
+                'productSources' => $productSources ?? null,
+                'variantSources' => $variantSources ?? null,
             ]
         );
     }
@@ -378,14 +390,21 @@ class Donkeytail extends Field
             $canvasElements = [Craft::$app->getAssets()->getAssetById($value['canvasId'][0])];
         }
 
-        $assetElements = $canvasElements;
+        $pinElementType = null;
+        if ($pinElementType = $this->pinElementType) {
+            if (in_array($pinElementType, ['Product', 'Variant'])) {
+                $pinElementType = "craft\\commerce\\elements\\$pinElementType";
+            } else {
+                $pinElementType = "craft\\elements\\$pinElementType";
+            }
+        }
 
         // Set entry elements
         $pinElements = [];
         $meta = [];
         if ($value['pinIds'] && is_array($value['pinIds'])) {
             foreach ($value['pinIds'] as $pinId) {
-                $pinElement = Craft::$app->getElements()->getElementById($pinId, "craft\\elements\\$this->pinElementType");
+                $pinElement = Craft::$app->getElements()->getElementById($pinId, $pinElementType);
                 if ($pinElement) {
                     // If entry exists, show it
                     array_push($pinElements, $pinElement);
@@ -417,7 +436,7 @@ class Donkeytail extends Field
                 'canvasElementType' => Asset::class,
                 'canvasSources' => $this->canvasSources,
 
-                'pinElementType' => $this->pinElementType ? "craft\\elements\\$this->pinElementType" : null,
+                'pinElementType' => $pinElementType,
                 'pinElementSources' => $this->{$pinElementSources} ? $this->{$pinElementSources} : null,
                 'pinElements' => $pinElements,
 
