@@ -66,6 +66,13 @@
             value: 'Asset'
         }]) %}
 
+        {% if userSources %}
+            {% set options = options|merge([{
+                label: 'Users',
+                value: 'User'
+            }]) %}
+        {% endif %}
+
         {% if categorySources %}
             {% set options = options|merge([{
                 label: 'Categories',
@@ -120,6 +127,19 @@
             name: 'assetSources',
             options: assetSources,
             values: field['assetSources'],
+            showAllOption: true,
+            required: true
+        }) }}
+    </div>
+
+    <div x-show="pinElementType == 'User'">
+        {{ forms.checkboxSelectField({
+            label: "User Sources"|t,
+            instructions: "Which sources do you want to select user pins from?"|t,
+            id: 'userSources',
+            name: 'userSources',
+            options: userSources,
+            values: field['userSources'],
             showAllOption: true,
             required: true
         }) }}

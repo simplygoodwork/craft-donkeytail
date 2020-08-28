@@ -15,6 +15,9 @@ use craft\gql\interfaces\elements\Entry as EntryInterface;
 use craft\gql\arguments\elements\Asset as AssetArguments;
 use craft\gql\interfaces\elements\Asset as AssetInterface;
 
+use craft\gql\arguments\elements\User as UserArguments;
+use craft\gql\interfaces\elements\User as UserInterface;
+
 use craft\gql\arguments\elements\Category as CategoryArguments;
 use craft\gql\interfaces\elements\Category as CategoryInterface;
 
@@ -82,6 +85,12 @@ class PinType extends ObjectType
                 'description' => 'Pin\'s asset element',
                 'type' => AssetInterface::getType(),
                 'args' => AssetArguments::getArguments(),
+            ],
+            'user' => [
+                'name' => 'user',
+                'description' => 'Pin\'s user element',
+                'type' => UserInterface::getType(),
+                'args' => UserArguments::getArguments(),
             ],
             'category' => [
                 'name' => 'category',

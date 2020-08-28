@@ -52,6 +52,8 @@ class Donkeytail extends Field
 
     public $assetSources = [];
 
+    public $userSources = [];
+
     public $categorySources = [];
 
     public $productSources = [];
@@ -265,6 +267,7 @@ class Donkeytail extends Field
                 'pinElementType' => $this->pinElementType,
                 'assetSources' => $this->getSourceOptions('craft\elements\Asset'),
                 'entrySources' => $this->getSourceOptions('craft\elements\Entry'),
+                'userSources' => $this->getSourceOptions('craft\elements\User'),
                 'categorySources' => $this->getSourceOptions('craft\elements\Category'),
                 'productSources' => $productSources ?? null,
                 'variantSources' => $variantSources ?? null,
@@ -417,10 +420,14 @@ class Donkeytail extends Field
                     // If element exists, show it
                     array_push($pinElements, $pinElement);
                     
-                    // Ensure label for pin entry is up to date
-                    $value->meta[$pinElement->id]['label'] = $pinElement->title;
+                    // Ensure label for pin element is up to date
+                    if ($this->pinElementType == 'User') {
+                        $value->meta[$pinElement->id]['label'] = $pinElement->username; 
+                    } else {
+                        $value->meta[$pinElement->id]['label'] = $pinElement->title;
+                    }
 
-                    // Only include meta for entries that exist
+                    // Only include meta for elements that exist
                     array_push($meta, $value->meta[$pinElement->id]);
                 }
             }

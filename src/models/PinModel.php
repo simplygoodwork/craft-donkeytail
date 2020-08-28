@@ -18,6 +18,7 @@ use craft\base\Model;
 use craft\elements\Asset;
 use craft\elements\Category;
 use craft\elements\Entry;
+use craft\elements\User;
 use craft\commerce\elements\Product;
 use craft\commerce\elements\Variant;
 
@@ -90,6 +91,14 @@ class PinModel extends Model
     // For GraphQL usage
     public function getAsset() {
         if (!$this->element instanceof Asset) {
+            return null;
+        }
+        return $this->element;
+    }
+
+    // For GraphQL usage
+    public function getUser() {
+        if (!$this->element instanceof User) {
             return null;
         }
         return $this->element;
