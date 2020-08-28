@@ -1,6 +1,6 @@
 # Donkeytail plugin for Craft CMS 3.x
 
-Donkeytail is a Craft CMS 3 fieldtype that allows you to quickly and easily content manage entry element points on images. You can use it for locations on a faux map, showcasing multiple products within an image, or even pinning the tail on a donkey.
+Donkeytail is a Craft CMS 3 fieldtype that allows you to quickly and easily content manage element points on images. You can use it for locations on a faux map, showcasing multiple products within an image, or even pinning the tail on a donkey.
 
 ![Screenshot](resources/img/screenshot.png)
 
@@ -63,13 +63,13 @@ The following attributes are available from your donkeytail field when accessed 
 
   - `y`: The top percentage value of the pin's anchor point in relation to the canvas (without % suffix).
 
-- {`entry`, `asset`, `category`}: The pin element.
+- {`entry`, `asset`, `user`, `category`, `product`, `variant`}: The pin element.
 
 ### Real world example
 
-You’ll need to render the canvas asset yourself as you normally would within a template. (the field doesn’t offer this incase you’d like to use a different, perhaps simplified version in the control panel)
+You’ll need to render the canvas asset yourself as you normally would within a template.
 
-A real world example would likely have the canvas in a parent container with `position: relative`. The dots can then be set to `position: absolute` and their positions output using an inline style attribute and `{{ entry.donkeytailField.style }}`. Don't forget to use negative margins or similar to move your front-end marker’s point to the match the anchor point of the dot.
+A real world example would likely have the canvas in a parent container with `position: relative`. The dots can then be set to `position: absolute` and their positions output using an inline style attribute and `{{ entry.donkeytailField.style }}`. Don't forget to use negative margins or similar to move your frontend marker’s point to the match the anchor point of the dot.
 
 ---
 
