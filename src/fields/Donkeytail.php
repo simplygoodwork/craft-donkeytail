@@ -246,7 +246,7 @@ class Donkeytail extends Field
         // Register our asset bundle
         $view->registerAssetBundle(DonkeytailAsset::class);
 
-        $id = $view->formatInputId('donkeytail');
+        $id = Html::id('donkeytail');
         $namespacedId = $view->namespaceInputId($id);
 
         $productSources = [];
@@ -376,7 +376,7 @@ class Donkeytail extends Field
         // Register our asset bundle
         $view->registerAssetBundle(DonkeytailAsset::class);
 
-        $id = $view->formatInputId($this->handle);
+        $id = Html::id($this->handle);
         $namespacedId = $view->namespaceInputId($id);
 
         $csrf = Craft::$app->request->csrfToken;
