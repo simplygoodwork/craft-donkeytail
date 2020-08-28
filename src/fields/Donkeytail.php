@@ -383,7 +383,7 @@ class Donkeytail extends Field
         $view->registerJs("window.csrfToken = '$csrf';", $view::POS_HEAD);
         $view->registerJs("window.dispatchEvent(new CustomEvent('build', { detail: '#$namespacedId-app' }));", $view::POS_END);
 
-        // Set asset elements
+        // Set canvas asset element
         $canvasElements = [];
 
         if ($value['canvasId'] && is_array($value['canvasId'])) {
@@ -414,7 +414,7 @@ class Donkeytail extends Field
             foreach ($value['pinIds'] as $pinId) {
                 $pinElement = Craft::$app->getElements()->getElementById($pinId, $pinElementType);
                 if ($pinElement) {
-                    // If entry exists, show it
+                    // If element exists, show it
                     array_push($pinElements, $pinElement);
                     
                     // Ensure label for pin entry is up to date
@@ -426,6 +426,7 @@ class Donkeytail extends Field
             }
         }
 
+        // Set element sources and use Entry as fallback
         $pinElementSources = $this->pinElementType ? strtolower($this->pinElementType).'Sources' : 'entrySources';
 
         // Render the input template
