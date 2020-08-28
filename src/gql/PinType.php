@@ -1,6 +1,7 @@
 <?php
 namespace simplygoodwork\donkeytail\gql;
 
+use Craft;
 use craft\gql\GqlEntityRegistry;
 use craft\gql\base\GqlTypeTrait;
 
@@ -59,7 +60,7 @@ class PinType extends ObjectType
 
     public static function getFieldDefinitions(): array
     {
-        return TypeManager::prepareFieldDefinitions([
+        $fieldDefinitions = [
             'x' => [
                 'name' => 'x',
                 'type' => Type::string(),
@@ -87,19 +88,26 @@ class PinType extends ObjectType
                 'description' => 'Pin\'s category element',
                 'type' => CategoryInterface::getType(),
                 'args' => CategoryArguments::getArguments(),
-            ],
-            'product' => [
-                'name' => 'product',
-                'description' => 'Pin\'s product element',
-                'type' => ProductInterface::getType(),
-                'args' => ProductArguments::getArguments(),
-            ],
-            'variant' => [
-                'name' => 'variant',
-                'description' => 'Pin\'s product variant element',
-                'type' => VariantInterface::getType(),
-                'args' => VariantArguments::getArguments(),
-            ],
-        ], self::getName());
+            ]
+        ];
+
+        if (Craft::$app->plugins->isPluginEnabled('commerce')) {
+            $fieldDefinitions = array_merge($fieldDefinitions, [
+                'product' => [
+                    'name' => 'product',
+                    'description' => 'Pin\'s product element',
+                    'type' => ProductInterface::getType(),
+                    'args' => ProductArguments::getArguments(),
+                ],
+                'variant' => [
+                    'name' => 'variant',
+                    'description' => 'Pin\'s product variant element',
+                    'type' => VariantInterface::getType(),
+                    'args' => VariantArguments::getArguments(),
+                ]
+            ]);
+        }
+
+        return TypeManager::prepareFieldDefinitions($fieldDefinitions, self::getName());
     }
 }
