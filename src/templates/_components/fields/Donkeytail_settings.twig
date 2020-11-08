@@ -18,14 +18,6 @@
 <div
     id="{{ id }}-x"
     x-data="{ pinElementType: '{{ pinElementType|length ? pinElementType : null }}' }"
-    x-init="
-        () => { var pinElementTypeSelect = document.querySelector('#{{ namespacedId }}-x .pinElementType select')
-        if (pinElementTypeSelect) {
-            pinElementTypeSelect.addEventListener('change', event => {
-                pinElementType = event.target.value
-            })
-        }
-    }"
 >
 
     {% if assetSources %}
@@ -101,6 +93,7 @@
             name: 'pinElementType',
             class: 'pinElementType',
             options: options,
+            inputAttributes: { 'x-model': 'pinElementType' },
             value: pinElementType|length ? pinElementType : null
         }) }}
         
