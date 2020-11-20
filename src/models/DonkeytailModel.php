@@ -114,23 +114,24 @@ class DonkeytailModel extends Model
     }
 
     public function getPinsElementType() {
-        if (!count($this->pinIds)) {
-            return null;
-        }
+        if (!$this->pinIds) return null;
+
         return (new Elements)->getElementTypeById($this->pinIds[0]);
     }
 
     public function getPins()
     {   
+        $pins = [];
+
         $elementTypeClass = $this->getPinsElementType();
+        if (!$elementTypeClass) return $pins;
+
         $query = $elementTypeClass::find();
         $criteria = [
             'id' => $this->pinIds
         ];
         Craft::configure($query, $criteria);
         $queryAll = $query->all();
-
-        $pins = [];
 
         foreach ($queryAll as $key => $element) {
             $pinMeta = $this->meta[$element->id];
