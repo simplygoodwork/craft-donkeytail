@@ -8,7 +8,7 @@ Follow the [@simplygoodwork](https://twitter.com/simplygoodwork) Twitter account
 
 ## Requirements
 
-This plugin requires Craft CMS 3.4 or later.
+This plugin requires Craft CMS 3.5.6 or later.
 
 ## Installation
 
