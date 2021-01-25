@@ -69,7 +69,30 @@ The following attributes are available from your donkeytail field when accessed 
 
 You’ll need to render the canvas asset yourself as you normally would within a template.
 
-A real world example would likely have the canvas in a parent container with `position: relative`. The dots can then be set to `position: absolute` and their positions output using an inline style attribute and `{{ entry.donkeytailField.style }}`. Don't forget to use negative margins or similar to move your frontend marker’s point to the match the anchor point of the dot.
+A real world example would likely have the canvas in a parent container with `position: relative`. The dots can then be set to `position: absolute` and their positions output using an inline style attribute and `{{ entry.donkeytailField.style }}`. Don't forget to use negative margins or similar to move your frontend marker’s point to the match the anchor point of the dot, and to replace `{donkeytailField}` with your Donkeytail Field handle:
+
+```
+<div style="width: 50%; position: relative;">
+  <img src="{{ entry.{donkeytailField}.canvas.url }}">
+  {% for pin in entry.{donkeytailField}.pins %}
+    <div style="position: absolute; z-index: 10; width: 10px; height: 10px; background-color: red; top:{{ pin.y }}%;left:{{ pin.x }}%;"></div>
+  {% endfor %}
+</div>
+```
+
+Or, if you want to show captions by default:
+
+```
+<div style="width: 50%; position: relative;">
+  <img src="{{ entry.{donkeytailField}.canvas.url }}">
+  {% for pin in entry.{donkeytailField}.pins %}
+    <div style="position: absolute; z-index: 10; width: 10px; height: 10px; background-color: red; top:{{ pin.y }}%;left:{{ pin.x }}%;"></div>
+    <div style="position: absolute; z-index: 10; background-color: rgba(0,0,0,.8); color: white; top:{{ pin.y }}%;left:{{ pin.x }}%;transform:translate(-50%, 100%);">
+      {{ pin.element.title }}
+    </div>
+  {% endfor %}
+</div>
+```
 
 ---
 
