@@ -96,7 +96,7 @@ class DonkeytailModel extends Model
     }
 
     /**
-     * Get the URL to the canvas asset 
+     * Get the URL to the canvas asset
      *
      * @param null $transform
      *
@@ -120,7 +120,7 @@ class DonkeytailModel extends Model
     }
 
     public function getPins()
-    {   
+    {
         $pins = [];
 
         $elementTypeClass = $this->getPinsElementType();
@@ -128,7 +128,8 @@ class DonkeytailModel extends Model
 
         $query = $elementTypeClass::find();
         $criteria = [
-            'id' => $this->pinIds
+            'id' => $this->pinIds,
+            'fixedOrder' => true
         ];
         Craft::configure($query, $criteria);
         $queryAll = $query->all();
