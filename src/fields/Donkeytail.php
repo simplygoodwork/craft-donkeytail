@@ -415,7 +415,7 @@ class Donkeytail extends Field
         $meta = [];
         if ($findPins == true && $value['pinIds'] && is_array($value['pinIds'])) {
             foreach ($value['pinIds'] as $pinId) {
-                $pinElement = Craft::$app->getElements()->getElementById($pinId, $pinElementType);
+                $pinElement = Craft::$app->getElements()->getElementById($pinId, $pinElementType, '*');
                 if ($pinElement) {
                     // If element exists, show it
                     array_push($pinElements, $pinElement);
