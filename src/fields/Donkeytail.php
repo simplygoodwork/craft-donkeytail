@@ -126,11 +126,15 @@ class Donkeytail extends Field
      */
     public function normalizeValue($value, ElementInterface $element = null)
     {
+        $site = ($element ? $element->getSite() : Craft::$app->getSites()->getCurrentSite());
+
         if (is_string($value) && !empty($value)) {
             $value = Json::decode($value);
         }
 
+        $value['site'] = $site;
         $model = new DonkeytailModel($value);
+
         return $model;
     }
 
@@ -146,7 +150,10 @@ class Donkeytail extends Field
      */
     public function serializeValue($value, ElementInterface $element = null)
     {
-        return parent::serializeValue($value, $element);
+        $_serialized = parent::serializeValue($value, $element);
+        unset($_serialized['site']);
+
+        return $_serialized;
     }
 
     /**
@@ -381,6 +388,7 @@ class Donkeytail extends Field
 
         $id = Html::id($this->handle);
         $namespacedId = $view->namespaceInputId($id);
+        $site = ($element ? $element->getSite() : Craft::$app->getSites()->getCurrentSite());
 
         $csrf = Craft::$app->request->csrfToken;
         $view->registerJs("window.csrfToken = '$csrf';", $view::POS_HEAD);
@@ -415,14 +423,14 @@ class Donkeytail extends Field
         $meta = [];
         if ($findPins == true && $value['pinIds'] && is_array($value['pinIds'])) {
             foreach ($value['pinIds'] as $pinId) {
-                $pinElement = Craft::$app->getElements()->getElementById($pinId, $pinElementType, '*');
+                $pinElement = Craft::$app->getElements()->getElementById($pinId, $pinElementType, $site->id);
                 if ($pinElement) {
                     // If element exists, show it
                     array_push($pinElements, $pinElement);
-                    
+
                     // Ensure label for pin element is up to date
                     if ($this->pinElementType == 'User') {
-                        $value->meta[$pinElement->id]['label'] = $pinElement->username; 
+                        $value->meta[$pinElement->id]['label'] = $pinElement->username;
                     } else {
                         $value->meta[$pinElement->id]['label'] = $pinElement->title;
                     }
@@ -446,6 +454,7 @@ class Donkeytail extends Field
                 'id' => $id,
                 'namespacedId' => $namespacedId,
                 'element' => $element,
+                'site' => $site->handle,
 
                 'canvasSourceExists' => count(Craft::$app->getAssets()->findFolders()),
                 'canvasElements' => $canvasElements,

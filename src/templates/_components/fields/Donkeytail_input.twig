@@ -27,7 +27,7 @@
   {% endif %}
 
   {# NOTE: Drag'n'drop onto this does not work: https://github.com/craftcms/cms/issues/3024 #}
-  {{ 
+  {{
     forms.elementSelectField({
       elements: canvasElement,
       id: id ~ '-canvasId',
@@ -35,8 +35,9 @@
       label: '' |t,
       elementType: canvasElementType,
       criteria: {
-      'kind': [],
-      'enabledForSite': null,
+        'kind': [],
+        'enabledForSite': null,
+        'site': site
       },
       sources: canvasSources,
       jsClass: 'Craft.AssetSelectInput',
@@ -56,7 +57,7 @@
   <div id="{{ id }}-pane" class="pane flex flex-wrap items-start overflow-hidden 2xl:!flex-no-wrap" {{ value.canvasId|length or autoSelected ? : "style='height: 0; opacity: 0; padding: 0;'" }}>
     <div>
       {% if pinElementSources|length %}
-        {{ 
+        {{
           forms.elementSelectField({
             elements: (pinElements is defined and pinElements ? [pinElements][0]),
             id: id ~ '-pins',
@@ -65,8 +66,8 @@
             elementType: pinElementType,
             criteria: {
               'enabledForSite': null,
+              'site': site
             },
-            showSiteMenu: true,
             sources: pinElementSources,
             jsClass: 'Craft.BaseElementSelectInput',
             selectionLabel: "Add #{pinElementType|split('\\')|last}" |t,

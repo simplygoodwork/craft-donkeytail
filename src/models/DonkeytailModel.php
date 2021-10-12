@@ -39,7 +39,14 @@ class DonkeytailModel extends Model
     /**
      * Some model attribute
      *
-     * @var array
+     * @var string
+     */
+    public $site = "";
+
+    /**
+     * Some model attribute
+     *
+     * @var string
      */
     public $canvasId = "";
 
@@ -129,6 +136,7 @@ class DonkeytailModel extends Model
         $query = $elementTypeClass::find();
         $criteria = [
             'id' => $this->pinIds,
+            'site' => $this->site->handle,
             'fixedOrder' => true
         ];
         Craft::configure($query, $criteria);
