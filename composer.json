@@ -2,7 +2,7 @@
   "name": "simplygoodwork/craft-donkeytail",
   "description": "Fieldtype that allows you to quickly and easily content manage points on images. You can use it for locations on a faux map, showcasing multiple products within an image, or even pinning the tail on a donkey.",
   "type": "craft-plugin",
-  "version": "2.0.5",
+  "version": "2.0.6",
   "keywords": [
     "craft",
     "cms",
