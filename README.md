@@ -1,4 +1,4 @@
-# Donkeytail plugin for Craft CMS 3.x
+# Donkeytail plugin for Craft CMS 4.x
 
 Donkeytail is a Craft CMS 3 fieldtype that allows you to quickly and easily content manage element points on images. You can use it for locations on a faux map, showcasing multiple products within an image, or even pinning the tail on a donkey.
 
@@ -8,7 +8,7 @@ Follow the [@simplygoodwork](https://twitter.com/simplygoodwork) Twitter account
 
 ## Requirements
 
-This plugin requires Craft CMS 3.5.6 or later.
+This plugin requires Craft CMS `4.0.0-alpha` or later.
 
 ## Installation
 
