@@ -1,5 +1,11 @@
 # Donkeytail Changelog
 
+## 3.0.0-beta.1 - 2022-03-28
+
+### Added
+
+* Initial Craft CMS 4 compatibility
+
 ## 2.0.6 - 2021-12-09
 
 ### Added

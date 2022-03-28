@@ -88,7 +88,7 @@ class Donkeytail extends Field
      *
      * @return array
      */
-    public function rules()
+    public function rules(): array
     {
         $rules = parent::rules();
         $rules = array_merge($rules, []);
@@ -106,7 +106,7 @@ class Donkeytail extends Field
      * appended as well.
      * @see \yii\db\QueryBuilder::getColumnType()
      */
-    public function getContentColumnType(): string
+    public function getContentColumnType(): array|string
     {
         return Schema::TYPE_TEXT;
     }
@@ -124,7 +124,7 @@ class Donkeytail extends Field
      *
      * @return mixed The prepared field value
      */
-    public function normalizeValue($value, ElementInterface $element = null)
+    public function normalizeValue(mixed $value, ?\craft\base\ElementInterface $element = null): mixed
     {
         $site = ($element ? $element->getSite() : Craft::$app->getSites()->getCurrentSite());
 
@@ -148,7 +148,7 @@ class Donkeytail extends Field
      * @param ElementInterface|null $element The element the field is associated with, if there is one
      * @return mixed The serialized field value
      */
-    public function serializeValue($value, ElementInterface $element = null)
+    public function serializeValue(mixed $value, ?\craft\base\ElementInterface $element = null): mixed
     {
         $_serialized = parent::serializeValue($value, $element);
         unset($_serialized['site']);
@@ -248,7 +248,7 @@ class Donkeytail extends Field
      *
      * @return string|null
      */
-    public function getSettingsHtml()
+    public function getSettingsHtml(): ?string
     {
         $view = Craft::$app->getView();
 
@@ -379,7 +379,7 @@ class Donkeytail extends Field
      *
      * @return string The input HTML.
      */
-    public function getInputHtml($value, ElementInterface $element = null): string
+    public function getInputHtml(mixed $value, ?\craft\base\ElementInterface $element = null): string
     {
         $view = Craft::$app->getView();
 
@@ -494,7 +494,7 @@ class Donkeytail extends Field
     /**
      * @inheritdoc
      */
-    public function getContentGqlType() {
+    public function getContentGqlType(): array|\GraphQL\Type\Definition\Type {
         return DonkeytailType::getType();
     }
 }
