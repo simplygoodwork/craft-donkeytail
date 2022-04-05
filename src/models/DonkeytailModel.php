@@ -11,13 +11,9 @@
 
 namespace simplygoodwork\donkeytail\models;
 
-use simplygoodwork\donkeytail\Donkeytail;
-
 use Craft;
 use craft\base\Model;
 use craft\services\Elements;
-use craft\elements\Entry;
-use simplygoodwork\donkeytail\models\PinModel;
 
 /**
  * DonkeytailModel Model
@@ -30,6 +26,10 @@ use simplygoodwork\donkeytail\models\PinModel;
  * @author    Good Work
  * @package   Donkeytail
  * @since     1.0.0
+ *
+ * @property-read null|object $canvas
+ * @property-read array $pins
+ * @property-read null $pinsElementType
  */
 class DonkeytailModel extends Model
 {
@@ -80,7 +80,7 @@ class DonkeytailModel extends Model
     public function rules(): array
     {
         return [
-            ['canvasId', 'array'],
+            ['canvasId', 'string'],
             ['pinIds', 'array'],
             ['meta', 'array'],
         ];

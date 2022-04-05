@@ -11,7 +11,6 @@
 
 namespace simplygoodwork\donkeytail\fields;
 
-// use simplygoodwork\donkeytail\Donkeytail;
 use simplygoodwork\donkeytail\assetbundles\donkeytail\DonkeytailAsset;
 
 use Craft;
@@ -20,8 +19,6 @@ use craft\base\Field;
 use yii\db\Schema;
 use craft\helpers\Html;
 use craft\elements\Asset;
-use craft\elements\Entry;
-use craft\elements\Category;
 use craft\helpers\Json;
 use simplygoodwork\donkeytail\models\DonkeytailModel;
 use simplygoodwork\donkeytail\gql\DonkeytailType;
@@ -44,23 +41,23 @@ class Donkeytail extends Field
     // Public Properties
     // =========================================================================
 
-    public $canvasSources = [];
+    public array $canvasSources = [];
 
-    public $pinElementType = [];
+    public string $pinElementType = '';
 
-    public $entrySources = [];
+    public array $entrySources = [];
 
-    public $assetSources = [];
+    public array $assetSources = [];
 
-    public $userSources = [];
+    public array $userSources = [];
 
-    public $categorySources = [];
+    public array $categorySources = [];
 
-    public $productSources = [];
+    public array $productSources = [];
 
-    public $variantSources = [];
+    public array $variantSources = [];
 
-    public $autoSelect = false;
+    public bool $autoSelect = false;
 
     // Static Methods
     // =========================================================================
@@ -124,7 +121,7 @@ class Donkeytail extends Field
      *
      * @return mixed The prepared field value
      */
-    public function normalizeValue(mixed $value, ?\craft\base\ElementInterface $element = null): mixed
+    public function normalizeValue(mixed $value, ?ElementInterface $element = null): mixed
     {
         $site = ($element ? $element->getSite() : Craft::$app->getSites()->getCurrentSite());
 
@@ -133,9 +130,12 @@ class Donkeytail extends Field
         }
 
         $value['site'] = $site;
-        $model = new DonkeytailModel($value);
 
-        return $model;
+        if($value instanceof DonkeytailModel){
+          return $value;
+        }
+
+        return new DonkeytailModel($value);
     }
 
     /**
@@ -265,7 +265,7 @@ class Donkeytail extends Field
         }
 
         // Render the settings template
-        return Craft::$app->getView()->renderTemplate(
+        return $view->renderTemplate(
             'donkeytail/_components/fields/Donkeytail_settings',
             [
                 'id' => $id,
@@ -426,17 +426,17 @@ class Donkeytail extends Field
                 $pinElement = Craft::$app->getElements()->getElementById($pinId, $pinElementType, $site->id);
                 if ($pinElement) {
                     // If element exists, show it
-                    array_push($pinElements, $pinElement);
+                    $pinElements[] = $pinElement;
 
                     // Ensure label for pin element is up to date
-                    if ($this->pinElementType == 'User') {
+                    if ($this->pinElementType === 'User') {
                         $value->meta[$pinElement->id]['label'] = $pinElement->username;
                     } else {
                         $value->meta[$pinElement->id]['label'] = $pinElement->title;
                     }
 
                     // Only include meta for elements that exist
-                    array_push($meta, $value->meta[$pinElement->id]);
+                    $meta[] = $value->meta[$pinElement->id];
                 }
             }
         }
@@ -456,13 +456,13 @@ class Donkeytail extends Field
                 'element' => $element,
                 'site' => $site->handle,
 
-                'canvasSourceExists' => count(Craft::$app->getAssets()->findFolders()),
+                'canvasSourceExists' => count(Craft::$app->getAssets()->findFolders([])),
                 'canvasElements' => $canvasElements,
                 'canvasElementType' => Asset::class,
                 'canvasSources' => $this->canvasSources,
 
                 'pinElementType' => $pinElementType,
-                'pinElementSources' => $this->{$pinElementSources} ? $this->{$pinElementSources} : null,
+                'pinElementSources' => $this->{$pinElementSources} ?: null,
                 'pinElements' => $pinElements,
 
                 'meta' => json_encode($meta),
