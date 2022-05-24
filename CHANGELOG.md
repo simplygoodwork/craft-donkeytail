@@ -1,5 +1,9 @@
 # Donkeytail Changelog
 
+## Unreleased
+
+- Fix bug that could sometimes cause canvas image to not load ([#31](https://github.com/simplygoodwork/craft-donkeytail/issues/31))
+
 ## 2.0.6 - 2021-12-09
 
 ### Added
