@@ -1,5 +1,10 @@
 # Donkeytail Changelog
 
+## Unreleased
+
+- Fix bug that could sometimes cause canvas image to not load ([#31](https://github.com/simplygoodwork/craft-donkeytail/issues/31))
+- Fix GQL deprecation error ([#32](https://github.com/simplygoodwork/craft-donkeytail/issues/34))
+
 ## 3.0.0-beta.1 - 2022-03-28
 
 ### Added

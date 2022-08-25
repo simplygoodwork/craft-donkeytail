@@ -6,7 +6,6 @@ use craft\gql\GqlEntityRegistry;
 use craft\gql\base\GqlTypeTrait;
 
 use craft\gql\base\ObjectType;
-use craft\gql\TypeManager;
 use GraphQL\Type\Definition\Type;
 
 use craft\gql\arguments\elements\Entry as EntryArguments;
@@ -26,12 +25,6 @@ use craft\commerce\gql\interfaces\elements\Product as ProductInterface;
 
 use craft\commerce\gql\arguments\elements\Variant as VariantArguments;
 use craft\commerce\gql\interfaces\elements\Variant as VariantInterface;
-
-use craft\gql\types\elements\Element as ElementType;
-use craft\gql\interfaces\Element as ElementInterface;
-use craft\gql\types\generators\ElementType as GeneratorsElementType;
-
-// use craft\gql\resolvers\elements\Entry as EntryResolver;
 
 
 class PinType extends ObjectType
@@ -117,6 +110,6 @@ class PinType extends ObjectType
             ]);
         }
 
-        return TypeManager::prepareFieldDefinitions($fieldDefinitions, self::getName());
+        return Craft::$app->getGql()->prepareFieldDefinitions($fieldDefinitions, self::getName());
     }
 }

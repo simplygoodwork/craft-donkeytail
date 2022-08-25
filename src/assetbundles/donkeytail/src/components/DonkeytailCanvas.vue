@@ -54,6 +54,9 @@ export default {
     value: {
       type: Number,
     },
+    image: {
+      type: String,
+    },
     meta: {
       type: [Object, Array],
     },
@@ -71,7 +74,7 @@ export default {
       window
         .axios({
           method: 'post',
-          url: '/actions/donkeytail/default/get-asset',
+          url: window.Craft.getActionUrl('donkeytail/default/get-asset'),
           data: {
             assetId: assetId,
             requestId: 1,
@@ -108,10 +111,14 @@ export default {
   },
   mounted() {
     const self = this
-    // If we already have a canvas asset ID, download it and plot it now
-    // Perf TODO: Do this in Twig
+
     if (self.value) {
-      self.getCanvasUrl(self.value)
+
+      if(self.image){
+        self.canvasUrl = self.image
+      }else {
+        self.getCanvasUrl(self.value)
+      }
 
       // If meta prop is passed, then transform data & preset pins
       if (self.meta && Object.keys(self.meta).length) {
