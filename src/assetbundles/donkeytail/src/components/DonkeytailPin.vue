@@ -20,6 +20,8 @@ export default {
     return {
       draggie: null,
       canvas: null,
+	    tippy: null,
+	    showTippy: false,
       position: {
         x: 0,
         y: 0,
@@ -36,17 +38,30 @@ export default {
       this.draggie.setPosition(xPos, yPos)
     },
   },
+	watch: {
+		pin: {
+			deep: true,
+			handler(newPinVal, oldPinVal){
+				if(newPinVal.showTippy){
+					this.tippy.show()
+				} else {
+					this.tippy.hide()
+				}
+			}
+		}
+	},
   mounted() {
     const self = this
     this.canvas = document.getElementById(self.canvasId)
 
     this.position.x = this.pin.x
     this.position.y = this.pin.y
+		this.showTippy = this.pin.showTippy
 
     this.draggie = new Draggabilly(this.$refs.pin, {
       containment: self.canvas,
     })
-    tippy(self.$refs.pin, {
+    this.tippy = tippy(self.$refs.pin, {
       content: self.pin.label,
       moveTransition: 'transform 0.35s ease-in-out',
     })

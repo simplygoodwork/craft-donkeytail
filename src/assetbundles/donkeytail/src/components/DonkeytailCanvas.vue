@@ -36,6 +36,11 @@
         :name="`${name}[meta][${pin.id}][y]`"
         :value="pin.y"
       />
+	    <input
+		    type="hidden"
+		    :name="`${name}[meta][${pin.id}][showTippy]`"
+		    :value="pin.showTippy"
+	    />
     </div>
   </div>
 </template>
@@ -116,6 +121,7 @@ export default {
 
       if(self.image){
         self.canvasUrl = self.image
+	      self.showPins = true
       }else {
         self.getCanvasUrl(self.value)
       }
@@ -127,6 +133,7 @@ export default {
           self.meta[i].id = Number(self.meta[i].id)
           self.meta[i].x = Number(self.meta[i].x)
           self.meta[i].y = Number(self.meta[i].y)
+	        self.meta[i].showTippy = false
           initialPins.push(self.meta[i])
         }
         self.pins = initialPins
@@ -137,7 +144,6 @@ export default {
       $(`#${self.namespacedId}-canvasId`)
         .data('elementSelect')
         .on('selectElements', function(e) {
-          console.log(e)
           self.getCanvasUrl(e.elements[0].id)
         })
 
@@ -171,9 +177,37 @@ export default {
               label: element.label,
               x: 50,
               y: 50,
+	            showTippy: false,
             })
           })
         })
+
+	    // Listen for ac
+	    const pinInputElementButtons = Array.from($(`#${self.namespacedId}-pins .element`))
+			const pinElementObserverOptions = {
+				attributes: true
+			}
+
+			const pinElementObserverCallback = (mutationList, observer) => {
+				mutationList.forEach((mutation) => {
+					if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
+						const el = mutation.target;
+						if(el.classList.contains('sel')){
+							const pinId = el.dataset.id;
+							let pinToUpdate = self.pins.findIndex(pin => pin.id === parseInt(pinId))
+							Object.assign(self.pins[pinToUpdate], {showTippy: true})
+						} else{
+							const pinId = el.dataset.id;
+							let pinToUpdate = self.pins.findIndex(pin => pin.id === parseInt(pinId))
+							Object.assign(self.pins[pinToUpdate], {showTippy: false})
+						}
+					}
+				})
+			}
+			const pinElementObserver = new MutationObserver(pinElementObserverCallback)
+	    pinInputElementButtons.forEach((button) => {
+		    pinElementObserver.observe(button, pinElementObserverOptions)
+	    })
 
       // On Pin Removal
       $(`#${self.namespacedId}-pins`)
