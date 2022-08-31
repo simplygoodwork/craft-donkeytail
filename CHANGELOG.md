@@ -1,7 +1,11 @@
 # Donkeytail Changelog
 
-## Unreleased
+## 2.0.7 - 2022-08-30
 
+#### Added
+- Add feature that shows pin in canvas when related element is selected (control panel)
+
+#### Fixed
 - Fix bug that could sometimes cause canvas image to not load ([#31](https://github.com/simplygoodwork/craft-donkeytail/issues/31))
 
 ## 2.0.6 - 2021-12-09
