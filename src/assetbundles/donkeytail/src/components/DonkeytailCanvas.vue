@@ -116,6 +116,7 @@ export default {
 
       if(self.image){
         self.canvasUrl = self.image
+	      self.showPins = true
       }else {
         self.getCanvasUrl(self.value)
       }
