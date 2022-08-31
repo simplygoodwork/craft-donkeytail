@@ -1,5 +1,13 @@
 # Donkeytail Changelog
 
+## 3.0.1 - 2022-08-30
+
+#### Added
+- Pin labels will now show in the control panel field canvas when the associated element pin is selected.
+
+#### Fixed 
+- Fix bug introduced in 3.0.0 that caused existing pins to be hidden in control panel field canvas ([#36](https://github.com/simplygoodwork/craft-donkeytail/issues/36))
+
 ## 3.0.0 - 2022-08-25
 
 - Fix bug that could sometimes cause canvas image to not load ([#31](https://github.com/simplygoodwork/craft-donkeytail/issues/31))
