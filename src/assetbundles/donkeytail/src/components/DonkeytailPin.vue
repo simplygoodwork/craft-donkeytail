@@ -1,10 +1,12 @@
 <template>
   <div
     ref="pin"
-    class="-ml-2 -mt-2 h-4 w-4 rounded-full border-white shadow-sm border-2 border-solid border-opacity-90 bg-black bg-opacity-50 absolute z-10 top-0 left-0 cursor-move flex items-center justify-center"
+    class="-ml-2 -mt-2 h-4 w-4 rounded-full shadow border-2 border-solid border-opacity-90   absolute z-10 top-0 left-0 cursor-move flex items-center justify-center"
+    :class="{'border-pink-600 bg-white': !hasMoved, 'border-white bg-opacity-50 bg-black': hasMoved}"
   >
     <div
-      class="h-1 w-1 rounded-full bg-white bg-opacity-90"
+      class="h-1 w-1 rounded-full bg-opacity-90"
+      :class="{'bg-pink-600': !hasMoved, 'bg-white': hasMoved}"
       style="margin: 0;"
     ></div>
   </div>
@@ -18,6 +20,7 @@ export default {
   props: ['canvas-id', 'pin'],
   data() {
     return {
+			hasMoved: false,
       draggie: null,
       canvas: null,
       tippy: null,
@@ -53,7 +56,9 @@ export default {
   mounted() {
     const self = this
     this.canvas = document.getElementById(self.canvasId)
-
+		if (this.pin.y !== 50 && this.pin.x !== 50) {
+			this.hasMoved = true;
+		}
     this.position.x = this.pin.x
     this.position.y = this.pin.y
     this.showTippy = this.pin.showTippy
@@ -97,6 +102,7 @@ export default {
 
       self.position.x = Math.max(0, Number(xPer.toFixed(3)))
       self.position.y = Math.max(0, Number(yPer.toFixed(3)))
+	    self.hasMoved = true;
       self.$emit('positioned', {
         id: self.pin.id,
         x: self.position.x,
