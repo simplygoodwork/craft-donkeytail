@@ -1,5 +1,11 @@
 # Donkeytail Changelog
 
+## 2.0.7.1 - 2023-02-03
+
+#### Changed
+- New (unset) pins are now a different color to better distinguish them from pins that have already been positioned.
+- Improve notes about what the auto-select setting for new Donkeytail fields does.
+
 ## 2.0.7 - 2022-08-30
 
 #### Added
