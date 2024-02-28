@@ -79,10 +79,9 @@ class Donkeytail extends Field
     }
 
     /**
-     * @return string
-     * @see \yii\db\QueryBuilder::getColumnType()
+     * @return array|null|string
      */
-    public function getContentColumnType(): array|string
+    public static function dbType(): array|null|string
     {
         return Schema::TYPE_TEXT;
     }
