@@ -85,6 +85,14 @@ class Donkeytail extends Field
     {
         return Schema::TYPE_TEXT;
     }
+	
+	/**
+	 * @return string font awesome icon handle
+	 */
+		public static function icon(): string
+		{
+			return 'map-pin';
+		}
 
     /**
      * @param mixed                 $value   The raw field value
