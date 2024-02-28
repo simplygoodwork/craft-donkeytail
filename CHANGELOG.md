@@ -1,5 +1,10 @@
 # Donkeytail Changelog
 
+## 5.0.0-beta.1 - 2024-02-27
+
+#### Added
+- Initial Craft CMS 5 compatibility
+
 ## 3.0.1 - 2022-08-30
 
 #### Added
