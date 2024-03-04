@@ -24,7 +24,8 @@
   ],
   "require": {
     "php": "^8.0.2",
-    "craftcms/cms": "^4.0.0"
+    "craftcms/cms": "^4.0.0",
+    "nystudio107/craft-plugin-vite": "^4.0"
   },
   "autoload": {
     "psr-4": {
@@ -39,5 +40,11 @@
     "documentationUrl": "https://github.com/simplygoodwork/craft-donkeytail/blob/master/README.md",
     "changelogUrl": "https://raw.githubusercontent.com/simplygoodwork/craft-donkeytail/v3/CHANGELOG.md",
     "class": "simplygoodwork\\donkeytail\\Donkeytail"
+  },
+  "config": {
+    "allow-plugins": {
+      "craftcms/plugin-installer": true,
+      "yiisoft/yii2-composer": true
+    }
   }
 }

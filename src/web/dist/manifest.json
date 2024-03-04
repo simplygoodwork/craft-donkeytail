@@ -1,0 +1,10 @@
+{
+  "src/web/src/donkeytail.js": {
+    "file": "assets/donkeytail-UOTWIJyu.js",
+    "src": "src/web/src/donkeytail.js",
+    "isEntry": true,
+    "css": [
+      "assets/donkeytail-HgPkte1M.css"
+    ]
+  }
+}

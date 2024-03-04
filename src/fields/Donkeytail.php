@@ -392,7 +392,7 @@ class Donkeytail extends Field
 
         $csrf = Craft::$app->request->csrfToken;
         $view->registerJs("window.csrfToken = '$csrf';", $view::POS_HEAD);
-        $view->registerJs("window.dispatchEvent(new CustomEvent('build', { detail: '#$namespacedId-app' }));", $view::POS_END);
+        $view->registerJs("console.log('#{$namespacedId}-app');window.dispatchEvent(new CustomEvent('build', { detail: '#{$namespacedId}-app' }));", $view::POS_END);
 
         // Set canvas asset element
         $canvasElements = [];

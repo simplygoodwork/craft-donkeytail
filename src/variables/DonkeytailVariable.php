@@ -12,6 +12,9 @@ namespace simplygoodwork\donkeytail\variables;
 
 use simplygoodwork\donkeytail\Donkeytail;
 
+use nystudio107\pluginvite\variables\ViteVariableInterface;
+use nystudio107\pluginvite\variables\ViteVariableTrait;
+
 use Craft;
 
 /**
@@ -26,8 +29,9 @@ use Craft;
  * @package   Donkeytail
  * @since     1.0.0
  */
-class DonkeytailVariable
+class DonkeytailVariable implements ViteVariableInterface
 {
+    use ViteVariableTrait;
     // Public Methods
     // =========================================================================
 

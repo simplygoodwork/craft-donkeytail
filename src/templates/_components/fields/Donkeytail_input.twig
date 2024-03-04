@@ -1,4 +1,4 @@
-{# @var craft \craft\web\twig\variables\CraftVariable #}
+
 {#
 /**
  * Donkeytail plugin for Craft CMS 3.x
@@ -14,6 +14,13 @@
 #}
 
 {% import "_includes/forms" as forms %}
+
+{% set scriptTagOptions = {
+  'depends': [
+    'simplygoodwork\\donkeytail\\assetbundles\\donkeytail\\DonkeytailAsset'
+  ],
+} %}
+{{ craft.donkeytail.register('src/web/src/donkeytail.js', false, scriptTagOptions) }}
 
 {% if canvasSourceExists and canvasSources|length %}
 
@@ -69,7 +76,7 @@
             sources: pinElementSources,
             jsClass: 'Craft.BaseElementSelectInput',
             selectionLabel: "Add #{pinElementType|split('\\')|last}" |t,
-            class: 'm-10'
+            class: ''
           })
         }}
       {% else %}
@@ -77,7 +84,7 @@
       {% endif %}
     </div>
 
-    <div id="{{ id ~ '-app' }}">
+    <div id="{{ id ~ '-app' }}" class="donkeytail-field-wrapper">
       <donkeytail-canvas
         name="{{ name }}"
         field="{{ field }}"

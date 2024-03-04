@@ -11,21 +11,23 @@
 
 namespace simplygoodwork\donkeytail;
 
-use simplygoodwork\donkeytail\variables\DonkeytailVariable;
-use simplygoodwork\donkeytail\fields\Donkeytail as DonkeytailField;
-
 use Craft;
+use yii\base\Event;
+
+use craft\helpers\App;
 use craft\base\Plugin;
+use craft\services\Gql;
+use craft\services\Fields;
 use craft\services\Plugins;
 use craft\events\PluginEvent;
-use craft\services\Fields;
+use craft\events\RegisterGqlTypesEvent;
 use craft\web\twig\variables\CraftVariable;
 use craft\events\RegisterComponentTypesEvent;
-use craft\services\Gql;
-use craft\events\RegisterGqlTypesEvent;
 use simplygoodwork\donkeytail\gql\DonkeytailType;
-
-use yii\base\Event;
+use nystudio107\pluginvite\services\VitePluginService;
+use simplygoodwork\donkeytail\assetbundles\donkeytail\DonkeytailAsset;
+use simplygoodwork\donkeytail\variables\DonkeytailVariable;
+use simplygoodwork\donkeytail\fields\Donkeytail as DonkeytailField;
 
 /**
  * Craft plugins are very much like little applications in and of themselves. We’ve made
@@ -59,21 +61,18 @@ class Donkeytail extends Plugin
     // =========================================================================
 
     /**
-     * To execute your plugin’s migrations, you’ll need to increase its schema version.
      *
      * @var string
      */
     public string $schemaVersion = '1.0.0';
 
     /**
-     * Set to `true` if the plugin should have a settings view in the control panel.
      *
      * @var bool
      */
     public bool $hasCpSettings = false;
 
     /**
-     * Set to `true` if the plugin should have its own section (main nav item) in the control panel.
      *
      * @var bool
      */
@@ -81,23 +80,45 @@ class Donkeytail extends Plugin
 
     // Public Methods
     // =========================================================================
+    public static function config(): array
+    {
+        return [
+            'components' => [
+                'vite' => [
+                    'class' => VitePluginService::class,
+                    'assetClass' => DonkeytailAsset::class,
+                    'useDevServer' => App::env('VITE_PLUGIN_DEVSERVER'),
+                    'manifestPath' => '@simplygoodwork/donkeytail/web/dist/.vite/manifest.json',
+                    'devServerPublic' => 'https://localhost:3002/',
+                    'serverPublic' => App::env('DEFAULT_SITE_URL'),
+                    'errorEntry' => 'web/src/main.js',
+                    'devServerInternal' => 'https://localhost:3002/',
+                    'checkDevServer' => false,
+                ],
+            ]
+        ];
+    }
 
-    /**
-     * Set our $plugin static property to this class so that it can be accessed via
-     * Donkeytail::$plugin
-     *
-     * Called after the plugin class is instantiated; do any one-time initialization
-     * here such as hooks and events.
-     *
-     * If you have a '/vendor/autoload.php' file, it will be loaded for you automatically;
-     * you do not need to load it in your init() method.
-     *
-     */
     public function init()
     {
         parent::init();
         self::$plugin = $this;
+        
+        Craft::setAlias('@simplygoodwork/donkeytail', $this->getBasePath());
 
+        // $this->setComponents([
+        //     'vite' => [
+        //         'class' => VitePluginService::class,
+        //         'assetClass' => DonkeytailAsset::class,
+        //         'useDevServer' => App::env('VITE_PLUGIN_DEVSERVER'),
+        //         'manifestPath' => '@simplygoodwork/donkeytail/web/dist/.vite/manifest.json',
+        //         'devServerPublic' => 'https://localhost:3002/',
+        //         'serverPublic' => App::env('DEFAULT_SITE_URL'),
+        //         'errorEntry' => 'web/src/main.js',
+        //         'devServerInternal' => 'https://localhost:3002/',
+        //         'checkDevServer' => false,
+        //     ],
+        // ]);
         // Register our fields
         Event::on(
             Fields::class,
@@ -114,7 +135,10 @@ class Donkeytail extends Plugin
             function (Event $event) {
                 /** @var CraftVariable $variable */
                 $variable = $event->sender;
-                $variable->set('donkeytail', DonkeytailVariable::class);
+                $variable->set('donkeytail', [
+                    'class' => DonkeytailVariable::class,
+                    'viteService' => $this->vite,
+                ]);
             }
         );
 
@@ -137,32 +161,6 @@ class Donkeytail extends Plugin
             }
         );
 
-        /**
-         * Logging in Craft involves using one of the following methods:
-         *
-         * Craft::trace(): record a message to trace how a piece of code runs. This is mainly for development use.
-         * Craft::info(): record a message that conveys some useful information.
-         * Craft::warning(): record a warning message that indicates something unexpected has happened.
-         * Craft::error(): record a fatal error that should be investigated as soon as possible.
-         *
-         * Unless `devMode` is on, only Craft::warning() & Craft::error() will log to `craft/storage/logs/web.log`
-         *
-         * It's recommended that you pass in the magic constant `__METHOD__` as the second parameter, which sets
-         * the category to the method (prefixed with the fully qualified class name) where the constant appears.
-         *
-         * To enable the Yii debug toolbar, go to your user account in the AdminCP and check the
-         * [] Show the debug toolbar on the front end & [] Show the debug toolbar on the Control Panel
-         *
-         * http://www.yiiframework.com/doc-2.0/guide-runtime-logging.html
-         */
-        Craft::info(
-            Craft::t(
-                'donkeytail',
-                '{name} plugin loaded',
-                ['name' => $this->name]
-            ),
-            __METHOD__
-        );
     }
 
     // Protected Methods
