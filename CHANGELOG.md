@@ -1,5 +1,10 @@
 # Donkeytail Changelog
 
+## 5.0.0-beta.2 - 2025-01-29
+
+#### Fixed
+- Fix errors that could occur when loading an entry with a Donkeytail field that contains deleted or disabled assets. 
+
 ## 5.0.0-beta.1 - 2024-02-27
 
 #### Added
