@@ -1,5 +1,13 @@
 # Donkeytail Changelog
 
+## 5.0.0-beta.2 - 01/29/2025
+
+#### Fixed
+- Fix errors that could occur when loading an entry with a Donkeytail field that contains deleted or disabled assets. 
+
+## 5.0.0-beta.1 - 02/27/2024
+- Initial Craft 5 support
+
 ## 3.0.1 - 2022-08-30
 
 #### Added
