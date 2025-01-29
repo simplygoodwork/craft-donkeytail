@@ -190,7 +190,7 @@ class Donkeytail extends Field
         $canvasElements = [];
 
         if ($value['canvasId'] && is_array($value['canvasId'])) {
-            $canvasElements = [Craft::$app->getAssets()->getAssetById($value['canvasId'][0])];
+            $canvasElements = array_filter([Craft::$app->getAssets()->getAssetById($value['canvasId'][0])]);
         }
 
         $pinElementType = null;
