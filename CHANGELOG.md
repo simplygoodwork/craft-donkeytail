@@ -1,5 +1,9 @@
 # Donkeytail Changelog
 
+## 5.0.0
+
+- Stable Craft 5 release
+
 ## 5.0.0-beta.2 - 2025-01-29
 
 #### Fixed
