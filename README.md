@@ -1,6 +1,6 @@
 # Donkeytail plugin for Craft CMS 4.x
 
-Donkeytail is a Craft CMS 4 fieldtype that allows you to quickly and easily content manage element points on images. You can use it for locations on a faux map, showcasing multiple products within 
+Donkeytail is a Craft CMS 4 fieldtype that allows you to quickly and easily content manage element points on images. You can use it for locations on a faux map, showcasing multiple products within
 an image, or even pinning the tail on a donkey.
 
 ![Screenshot](resources/img/screenshot.png)
@@ -65,6 +65,24 @@ The following attributes are available from your donkeytail field when accessed 
   - `y`: The top percentage value of the pin's anchor point in relation to the canvas (without % suffix).
 
 - {`entry`, `asset`, `user`, `category`, `product`, `variant`}: The pin element.
+
+### Querying
+
+The following query will find all entries that contain a particular canvas:
+
+```twig
+{% set results = craft.entries.{donkeytailField}({canvas: 103}).all() %}
+```
+
+To find what entries contain a pin or group of pins:
+
+```twig
+{% set ids = [ 201, 202, 203 ] %}
+{% set results = craft.entries.{donkeytailField}({pins: ids}).all() %}
+```
+
+Note, the pin membership is an intersection aka an 'OR' query. An entry only needs to contain one of the requested pins to match.
+
 
 ### Real world example
 
