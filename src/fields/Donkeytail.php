@@ -139,8 +139,8 @@ class Donkeytail extends Field
      */
     public static function queryCondition(array $instances, mixed $value, array &$params): array|string|ExpressionInterface|false|null
     {
-        $canvas = $value['canvas'] ?? null;
-        $pins = $value['pins'] ?? [];
+        $canvas = self::_normaliseParam($value['canvas'] ?? []);
+        $pins = self::_normaliseParam($value['pins'] ?? []);
 
         if (empty($canvas) and empty($pins)) {
             return false;
@@ -170,6 +170,43 @@ class Donkeytail extends Field
 
         $expression = new AndCondition($conditions);
         return $expression;
+    }
+
+
+    /**
+     * Normalise params into IDs.
+     *
+     * This accepts strings, integer, elements, element queries.
+     *
+     * @param mixed $param
+     * @return int[]
+     */
+    protected static function _normaliseParam(mixed $param): array
+    {
+        if (!is_array($param)) {
+            $param = $param ? [$param] : [];
+        }
+
+        $ids = [];
+
+        foreach ($param as &$item) {
+            if ($item instanceof ElementInterface) {
+                $ids[] = $item->id;
+
+            } else if ($item instanceof ElementQuery) {
+                foreach ($item->ids() as $id) {
+                    $ids[] = $id;
+                }
+
+            } else if (in_array($item, ['not', 'or', 'and', ':empty:', ':notempty:'])) {
+                $ids[] = $item;
+
+            } else if ($id = (int) $item) {
+                $ids[] = $id;
+            }
+        }
+
+        return $ids;
     }
 
 
