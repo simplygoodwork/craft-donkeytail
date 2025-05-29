@@ -19,9 +19,13 @@ use craft\base\Field;
 use yii\db\Schema;
 use craft\helpers\Html;
 use craft\elements\Asset;
+use craft\elements\db\ElementQuery;
+use craft\helpers\Db;
 use craft\helpers\Json;
 use simplygoodwork\donkeytail\models\DonkeytailModel;
 use simplygoodwork\donkeytail\gql\DonkeytailType;
+use yii\db\conditions\AndCondition;
+use yii\db\ExpressionInterface;
 
 /**
  * Donkeytail Field
@@ -128,6 +132,115 @@ class Donkeytail extends Field
 
         return $_serialized;
     }
+
+
+    /**
+     * @inheritdoc
+     */
+    public static function queryCondition(array $instances, mixed $value, array &$params): array|string|ExpressionInterface|false|null
+    {
+        $canvas = self::_normaliseParam($value['canvas'] ?? []);
+        $pins = self::_normaliseParam($value['pins'] ?? []);
+
+        if (empty($canvas) and empty($pins)) {
+            return false;
+        }
+
+        $conditions = [];
+
+        $db = Craft::$app->getDb();
+        $column = $db->quoteColumnName('elements_sites.content');
+
+        foreach ($instances as $instance) {
+            if ($canvas) {
+                // I'd use QueryBuilder::jsonExtract() if I could.
+                // But it doesn't let me use array indexes.
+                $path = $db->quoteValue("$.{$instance->layoutElement->uid}.canvasId[0]");
+                $valueSql = $db->getIsMaria()
+                    ? "JSON_UNQUOTE(JSON_EXTRACT($column, $path))"
+                    : "($column->>$path)";
+
+                $conditions[] = Db::parseParam($valueSql, $canvas, columnType: Schema::TYPE_INTEGER);
+            }
+
+            if ($pins) {
+                $conditions[] = Db::parseParam('donkeytail_pins.id', $pins, columnType: Schema::TYPE_INTEGER);
+            }
+        }
+
+        $expression = new AndCondition($conditions);
+        return $expression;
+    }
+
+
+    /**
+     * Normalise params into IDs.
+     *
+     * This accepts strings, integer, elements, element queries.
+     *
+     * @param mixed $param
+     * @return int[]
+     */
+    protected static function _normaliseParam(mixed $param): array
+    {
+        if (!is_array($param)) {
+            $param = $param ? [$param] : [];
+        }
+
+        $ids = [];
+
+        foreach ($param as &$item) {
+            if ($item instanceof ElementInterface) {
+                $ids[] = $item->id;
+
+            } else if ($item instanceof ElementQuery) {
+                foreach ($item->ids() as $id) {
+                    $ids[] = $id;
+                }
+
+            } else if (in_array($item, ['not', 'or', 'and', ':empty:', ':notempty:'])) {
+                $ids[] = $item;
+
+            } else if ($id = (int) $item) {
+                $ids[] = $id;
+            }
+        }
+
+        return $ids;
+    }
+
+
+    /**
+     * Join an extra table for performing pin queries.
+     *
+     * Unfortunately json_array_intersect() is relatively new and isn't
+     * supported in the baseline Mysql/Mariadb versions.
+     *
+     * @param ElementQuery $query
+     * @return void
+     */
+    public static function afterPrepare(ElementQuery $query): void
+    {
+        if ($query->customFields === null) {
+            return;
+        }
+
+        $fieldAttributes = $query->getBehavior('customFields');
+
+        foreach ($query->customFields as $field) {
+            if (!$field instanceof self) {
+                continue;
+            }
+
+            if (($fieldAttributes->{$field->handle} ?? null) === null) {
+                continue;
+            }
+
+            $subQuery = "JSON_TABLE([[elements_sites.content]], '$.{$field->layoutElement->uid}.pinIds[*]' COLUMNS (id INT PATH '$'))";
+            $query->subQuery->innerJoin(['donkeytail_pins' => $subQuery]);
+        }
+    }
+
 
     /**
      * @return string|null

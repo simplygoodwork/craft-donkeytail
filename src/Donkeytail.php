@@ -16,6 +16,7 @@ use simplygoodwork\donkeytail\fields\Donkeytail as DonkeytailField;
 
 use Craft;
 use craft\base\Plugin;
+use craft\elements\db\ElementQuery;
 use craft\services\Plugins;
 use craft\events\PluginEvent;
 use craft\services\Fields;
@@ -134,6 +135,14 @@ class Donkeytail extends Plugin
             Gql::EVENT_REGISTER_GQL_TYPES, 
             function (RegisterGqlTypesEvent $event) {
                 $event->types[] = DonkeytailType::class;
+            }
+        );
+
+        Event::on(
+            ElementQuery::class,
+            ElementQuery::EVENT_AFTER_PREPARE,
+            function (Event $event) {
+                DonkeytailField::afterPrepare($event->sender);
             }
         );
 
