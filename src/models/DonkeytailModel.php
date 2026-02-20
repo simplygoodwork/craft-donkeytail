@@ -136,7 +136,7 @@ class DonkeytailModel extends Model
         $query = $elementTypeClass::find();
         $criteria = [
             'id' => $this->pinIds,
-            'site' => $this->site->handle,
+            'siteId' => $this->site->id,
             'fixedOrder' => true
         ];
         Craft::configure($query, $criteria);
