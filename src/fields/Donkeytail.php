@@ -173,14 +173,6 @@ class Donkeytail extends Field implements EagerLoadingFieldInterface
     }
 
     /**
-     * @inheritdoc
-     */
-    public function getEagerLoadingGqlConditions(): ?array
-    {
-        return [];
-    }
-
-    /**
      * @param mixed $value The raw field value
      * @param ElementInterface|null $element The element the field is associated with, if there is one
      * @return mixed The serialized field value
