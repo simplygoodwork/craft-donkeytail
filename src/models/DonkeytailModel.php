@@ -12,6 +12,7 @@
 namespace simplygoodwork\donkeytail\models;
 
 use Craft;
+use craft\base\ElementInterface;
 use craft\base\Model;
 use craft\services\Elements;
 
@@ -64,6 +65,15 @@ class DonkeytailModel extends Model
      */
     public $meta = [];
 
+    // Private Properties
+    // =========================================================================
+
+    private ?ElementInterface $_owner = null;
+
+    private ?string $_fieldHandle = null;
+
+    private ?array $_eagerLoadedElementsById = null;
+
     // Public Methods
     // =========================================================================
 
@@ -87,6 +97,15 @@ class DonkeytailModel extends Model
     }
 
     /**
+     * Set the owner element and field handle for lazy eager-loading access.
+     */
+    public function setOwner(ElementInterface $element, string $fieldHandle): void
+    {
+        $this->_owner = $element;
+        $this->_fieldHandle = $fieldHandle;
+    }
+
+    /**
      * Get the canvas asset
      *
      * @return null|object
@@ -96,7 +115,14 @@ class DonkeytailModel extends Model
         $result = null;
 
         if (isset($this->canvasId) && $this->canvasId) {
-            $result = Craft::$app->getAssets()->getAssetById($this->canvasId[0]);
+            $canvasId = is_array($this->canvasId) ? $this->canvasId[0] : $this->canvasId;
+
+            $eagerLoaded = $this->_getEagerLoadedElementsById();
+            if ($eagerLoaded !== null && isset($eagerLoaded[$canvasId])) {
+                return $eagerLoaded[$canvasId];
+            }
+
+            $result = Craft::$app->getAssets()->getAssetById($canvasId);
         }
 
         return $result;
@@ -133,16 +159,42 @@ class DonkeytailModel extends Model
         $elementTypeClass = $this->getPinsElementType();
         if (!$elementTypeClass) return $pins;
 
-        $query = $elementTypeClass::find();
-        $criteria = [
-            'id' => $this->pinIds,
-            'site' => $this->site->handle,
-            'fixedOrder' => true
-        ];
-        Craft::configure($query, $criteria);
-        $queryAll = $query->all();
+        // Check eager-loaded elements (works when pins are Assets)
+        $eagerLoaded = $this->_getEagerLoadedElementsById();
+        $queryAll = null;
+
+        if ($eagerLoaded !== null && !empty($this->pinIds)) {
+            $allFound = true;
+            $eagerPins = [];
+            foreach ($this->pinIds as $pinId) {
+                if (isset($eagerLoaded[(int)$pinId])) {
+                    $eagerPins[] = $eagerLoaded[(int)$pinId];
+                } else {
+                    $allFound = false;
+                    break;
+                }
+            }
+            if ($allFound) {
+                $queryAll = $eagerPins;
+            }
+        }
+
+        // Fall back to query
+        if ($queryAll === null) {
+            $query = $elementTypeClass::find();
+            $criteria = [
+                'id' => $this->pinIds,
+                'site' => $this->site->handle,
+                'fixedOrder' => true
+            ];
+            Craft::configure($query, $criteria);
+            $queryAll = $query->all();
+        }
 
         foreach ($queryAll as $key => $element) {
+            if (!isset($this->meta[$element->id])) {
+                continue;
+            }
             $pinMeta = $this->meta[$element->id];
             $pin = new PinModel();
             $pin->element = $element;
@@ -152,5 +204,31 @@ class DonkeytailModel extends Model
         }
 
         return $pins;
+    }
+
+    // Private Methods
+    // =========================================================================
+
+    /**
+     * Lazily resolve eager-loaded elements indexed by ID.
+     */
+    private function _getEagerLoadedElementsById(): ?array
+    {
+        if ($this->_eagerLoadedElementsById !== null) {
+            return $this->_eagerLoadedElementsById;
+        }
+
+        if ($this->_owner && $this->_fieldHandle) {
+            $collection = $this->_owner->getEagerLoadedElements($this->_fieldHandle);
+            if ($collection !== null) {
+                $this->_eagerLoadedElementsById = [];
+                foreach ($collection as $element) {
+                    $this->_eagerLoadedElementsById[$element->id] = $element;
+                }
+                return $this->_eagerLoadedElementsById;
+            }
+        }
+
+        return null;
     }
 }

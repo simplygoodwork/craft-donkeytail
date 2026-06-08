@@ -14,6 +14,7 @@ namespace simplygoodwork\donkeytail\fields;
 use simplygoodwork\donkeytail\assetbundles\donkeytail\DonkeytailAsset;
 
 use Craft;
+use craft\base\EagerLoadingFieldInterface;
 use craft\base\ElementInterface;
 use craft\base\Field;
 use yii\db\Schema;
@@ -36,7 +37,7 @@ use simplygoodwork\donkeytail\gql\DonkeytailType;
  * @package   Donkeytail
  * @since     1.0.0
  */
-class Donkeytail extends Field
+class Donkeytail extends Field implements EagerLoadingFieldInterface
 {
     // Public Properties
     // =========================================================================
@@ -132,10 +133,73 @@ class Donkeytail extends Field
         $value['site'] = $site;
 
         if($value instanceof DonkeytailModel){
+          if ($element) {
+              $value->setOwner($element, $this->handle);
+          }
           return $value;
         }
 
-        return new DonkeytailModel($value);
+        $model = new DonkeytailModel($value);
+
+        if ($element) {
+            $model->setOwner($element, $this->handle);
+        }
+
+        return $model;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getEagerLoadingMap(array $sourceElements): array|null|false
+    {
+        $map = [];
+
+        foreach ($sourceElements as $sourceElement) {
+            $fieldValue = $sourceElement->getFieldValue($this->handle);
+
+            if (!$fieldValue instanceof DonkeytailModel) {
+                continue;
+            }
+
+            // Map canvas asset
+            if (!empty($fieldValue->canvasId)) {
+                $canvasId = is_array($fieldValue->canvasId) ? $fieldValue->canvasId[0] : $fieldValue->canvasId;
+                if ($canvasId) {
+                    $map[] = [
+                        'source' => (int)$sourceElement->id,
+                        'target' => (int)$canvasId,
+                    ];
+                }
+            }
+
+            // Map pin elements (included in case pins are also Assets)
+            if (!empty($fieldValue->pinIds)) {
+                foreach ($fieldValue->pinIds as $pinId) {
+                    $map[] = [
+                        'source' => (int)$sourceElement->id,
+                        'target' => (int)$pinId,
+                    ];
+                }
+            }
+        }
+
+        if (empty($map)) {
+            return null;
+        }
+
+        return [
+            'elementType' => Asset::class,
+            'map' => $map,
+        ];
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getEagerLoadingGqlConditions(): ?array
+    {
+        return [];
     }
 
     /**
